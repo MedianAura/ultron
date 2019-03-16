@@ -1,19 +1,22 @@
 {
   "compilerOptions": {
     "target": "es6",
+    "moduleResolution": "node",
     "strict": true,
     "importHelpers": true,
     "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "strictNullChecks": false,
+    "noImplicitAny": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "sourceMap": false,
     "baseUrl": ".",
-    "types": [
-      "webpack-env",
-      "mocha",
-      "chai"
-    ],
+    "types": ["node"],
     "paths": {
+      "*": [
+        "types/*"
+      ],
       "@/*": [
         "src/*"
       ]
