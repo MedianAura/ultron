@@ -26,6 +26,7 @@
     "typescript": "^3.3.3333"
   },
   "dependencies": {
+    "fast-glob": "^2.2.6",
     "json2typescript": "^1.2.0"
   }
 }

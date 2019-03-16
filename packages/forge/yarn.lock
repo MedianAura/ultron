@@ -6750,6 +6750,11 @@ vue-template-es2015-compiler@^1.4.2:
   resolved "https://registry.yarnpkg.com/vue-template-es2015-compiler/-/vue-template-es2015-compiler-1.9.1.tgz#1ee3bc9a16ecbf5118be334bb15f9c46f82f5825"
   integrity sha512-4gDntzrifFnCEvyoO8PqyJDmguXgVPxKiIxrBKjIowvL9l+N66196+72XVYR8BBf1Uv1Fgt3bGevJ+sEmxfZzw==
 
+walk-back@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/walk-back/-/walk-back-3.0.1.tgz#0c0012694725604960d6c2f75aaf1a1e7d455d35"
+  integrity sha512-umiNB2qLO731Sxbp6cfZ9pwURJzTnftxE4Gc7hq8n/ehkuXC//s9F65IEIJA2ZytQZ1ZOsm/Fju4IWx0bivkUQ==
+
 wcwidth@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/wcwidth/-/wcwidth-1.0.1.tgz#f0b0dcf915bc5ff1528afadb2c0e17b532da2fe8"
