@@ -1,0 +1,14 @@
+{
+  "packages": [
+    "packages/*"
+  ],
+  "npmClient": "yarn",
+  "version": "independent",
+  "stream": true,
+  "parallel": true,
+  "command": {
+    "run": {
+      "npmClient": "yarn"
+    }
+  }
+}
