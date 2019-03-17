@@ -1,4 +1,4 @@
-import {Any, JsonConvert, JsonObject, JsonProperty, OperationMode, ValueCheckingMode} from "json2typescript";
+import {Any, JsonObject, JsonProperty} from "json2typescript";
 
 @JsonObject("Step")
 export class Step {
@@ -7,4 +7,8 @@ export class Step {
 
     @JsonProperty("options", Any)
     jsonOptions: any = undefined;
+
+    setConfigurationOptions(config: object) {
+
+    }
 }

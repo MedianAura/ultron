@@ -1,12 +1,15 @@
 import {existsSync, readFileSync} from "fs";
 import * as path from 'path';
 import fg from "fast-glob";
+import {find} from 'lodash'
 import {JsonConfiguration} from "@/app/helpers/json-configuration";
 import {Application} from "@/app/models/application.model";
+import {ApplicationController} from "@/app/controllers/application.controller";
 
 const debug = require('debug')('ultron:CoreController')
 
 export class CoreController {
+    private applicationController: ApplicationController;
     private applications: Application[] = []
     private path: PathConfigurationInterface = {
         app: undefined,
@@ -14,6 +17,10 @@ export class CoreController {
         data: undefined,
         extra: undefined
     };
+
+    constructor() {
+        this.applicationController = new ApplicationController()
+    }
 
     setElectron(electron: object) {
 
@@ -32,6 +39,19 @@ export class CoreController {
 
         this.setConfiguration()
         this.setPackageConfiguration()
+    }
+
+    loadSelectedPackage(name: string) {
+        let application: Application = find(this.applications, {name: name})
+        if (typeof application === "undefined")
+            throw Error(`Application <${name}> is not found in the list of application.`)
+
+        this.applicationController.init(application)
+        this.applicationController.start()
+    }
+
+    getApplicationController(): ApplicationController {
+        return this.applicationController
     }
 
     private setConfiguration() {
