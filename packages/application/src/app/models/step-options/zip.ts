@@ -1,36 +1,57 @@
-export default class Copy extends Vue {
-    @Getter('application/getSteps') steps!: any
-    @Prop() sequence!: number
+import {JsonObject, JsonProperty} from "json2typescript";
+import {ZipTypeEnum} from "@/app/enums/zip-type.enum";
+import {StepOption} from "@/app/models/step-option.model";
+import * as path from "path";
 
-    get title() {
-        return this.steps[this.sequence]['options']['title'] ? this.steps[this.sequence]['options']['title'] : 'ZIP'
-    }
+
+@JsonObject("ZipOption")
+export class ZipOption extends StepOption {
+    @JsonProperty("title", String, true)
+    title: string = 'Zip';
+
+    @JsonProperty("type", String)
+    type: ZipTypeEnum = undefined;
+
+    @JsonProperty("params", [String])
+    params: string[] = [];
+
+    @JsonProperty("mask", [String])
+    mask: string[] = [];
+
+    @JsonProperty("fileName", String)
+    fileName: string = undefined;
+
+    @JsonProperty("from", String)
+    from: string = undefined;
+
+    @JsonProperty("to", String)
+    to: string = undefined;
 
     get cmd() {
-        let cmd = 'winrar '
+        let cmd = 'winrar ';
 
-        let from = path.resolve(this.steps[this.sequence]['options']['from']) + '\\'
-        let to = path.resolve(this.steps[this.sequence]['options']['to']) + '\\'
-        let mask = this.steps[this.sequence]['options']['mask']
-        let fileName = this.steps[this.sequence]['options']['fileName']
+        let from = path.resolve(this.from) + '\\';
+        let to = path.resolve(this.to) + '\\';
+        let mask = this.mask;
+        let fileName = this.fileName;
 
-        let aParams: string[] = []
-        switch (this.steps[this.sequence]['options']['type']) {
-            case 'compress':
-                aParams.push('a -ibck')
-                aParams = aParams.concat(this.steps[this.sequence]['options']['params'])
-                aParams.push(to + fileName)
+        let aParams: string[] = [];
+        switch (this.type) {
+            case ZipTypeEnum.COMPRESS:
+                aParams.push('a -ibck');
+                aParams = aParams.concat(this.params);
+                aParams.push(to + fileName);
                 aParams = aParams.concat(mask.map((value: string) => {
-                    value = from + value
+                    value = from + value;
                     return value
-                }))
-                break
-            case 'extract':
-                aParams.push('x -ibck')
-                aParams = aParams.concat(this.steps[this.sequence]['options']['params'])
-                aParams.push(from + fileName)
-                aParams = aParams.concat(mask)
-                aParams.push(to)
+                }));
+                break;
+            case ZipTypeEnum.EXTRACT:
+                aParams.push('x -ibck');
+                aParams = aParams.concat(this.params);
+                aParams.push(from + fileName);
+                aParams = aParams.concat(mask);
+                aParams.push(to);
                 break
         }
 

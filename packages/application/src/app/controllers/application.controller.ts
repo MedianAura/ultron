@@ -3,6 +3,9 @@ import {GitEnvironnement} from "@/app/enums/git-env.enum";
 import {Version} from "@/app/models/version.model";
 import {find} from "lodash";
 import {Step} from "@/app/models/step.model";
+import {StepOptionFactoryService} from "@/app/services/step-option-factory.service";
+
+const debug = require('debug')('ultron:ApplicationController')
 
 export class ApplicationController {
     application: Application;
@@ -12,7 +15,10 @@ export class ApplicationController {
     }
 
     start() {
-
+        this.setStepInformation()
+            .catch((err: Error) => {
+                debug(err.message)
+            })
     }
 
     setRecipe(name: string) {
@@ -31,9 +37,14 @@ export class ApplicationController {
         return new Promise<boolean>((resolve, reject) => {
             this.application.versions.forEach((version) => {
                 version.steps.forEach((step: Step) => {
-
+                    try {
+                        StepOptionFactoryService.getStepOptions(step, this.application.config)
+                    } catch (e) {
+                        reject(e)
+                    }
                 })
             })
+
             resolve(true)
         })
     }

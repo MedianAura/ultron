@@ -1,4 +1,5 @@
 import {JsonObject, JsonProperty} from "json2typescript";
+import {StepOption} from "@/app/models/step-option.model";
 
 @JsonObject("CommandOption")
 export class CommandOption extends StepOption {

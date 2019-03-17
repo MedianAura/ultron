@@ -9,7 +9,7 @@ import {ApplicationController} from "@/app/controllers/application.controller";
 const debug = require('debug')('ultron:CoreController')
 
 export class CoreController {
-    private applicationController: ApplicationController;
+    private readonly applicationController: ApplicationController;
     private applications: Application[] = []
     private path: PathConfigurationInterface = {
         app: undefined,
@@ -41,7 +41,7 @@ export class CoreController {
         this.setPackageConfiguration()
     }
 
-    loadSelectedPackage(name: string) {
+    loadSelectedApplication(name: string) {
         let application: Application = find(this.applications, {name: name})
         if (typeof application === "undefined")
             throw Error(`Application <${name}> is not found in the list of application.`)

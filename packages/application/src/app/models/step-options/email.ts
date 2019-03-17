@@ -1,37 +1,32 @@
-// @Component
-// export default class Email extends Vue {
-//     @Mutation('application/updateParams') updateParams: any
-//     @Getter('application/getSteps') steps!: any
-//     @Prop() sequence!: number
-//
-//     additionalDest = ''
-//
-//     get title() {
-//         return this.steps[this.sequence]['options']['title'] ? this.steps[this.sequence]['options']['title'] : 'eMail'
-//     }
-//
-//     updateValues() {
-//         let destinataires = this.steps[this.sequence]['options']['to']
-//         if ((this.$refs.dstAddionnels as HTMLInputElement).value !== '') {
-//             let response = ApplicationsService.validateAddresses((this.$refs.dstAddionnels as HTMLInputElement).value)
-//             if (response.success) {
-//                 destinataires += ',' + response.data
-//                 this.additionalDest = ''
-//             } else {
-//                 // todo en cas d'erreur
-//             }
-//         }
-//         let params = {
-//             'index': this.sequence,
-//             'options': {
-//                 'template': this.steps[this.sequence]['options']['template'],
-//                 'to': destinataires,
-//                 'subject': this.steps[this.sequence]['options']['subject'],
-//                 'title': this.steps[this.sequence]['options']['title'],
-//                 'text': (this.$refs.mailText as HTMLInputElement).value,
-//                 'markdown': (this.$refs.markdownText as HTMLInputElement).value
-//             }
-//         }
-//         this.updateParams(params)
-//     }
-// }
+import {JsonObject, JsonProperty} from "json2typescript";
+import {StepOption} from "@/app/models/step-option.model";
+
+@JsonObject("EmailTemplate")
+class EmailTemplate {
+    @JsonProperty("ref", String)
+    ref: string
+
+    @JsonProperty("title", String)
+    title: string
+}
+
+@JsonObject("EmailOption")
+export class EmailOption extends StepOption {
+    @JsonProperty("title", String, true)
+    title: string = 'eMail';
+
+    @JsonProperty("to", String)
+    to: string = undefined
+
+    @JsonProperty("subject", String)
+    subject: string = undefined
+
+    @JsonProperty("text", String, true)
+    text: string = undefined
+
+    @JsonProperty("markdown", String, true)
+    markdown: string = undefined
+
+    @JsonProperty("template", EmailTemplate)
+    template: EmailTemplate = undefined
+}

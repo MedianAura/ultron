@@ -1,15 +1,13 @@
 import {JsonObject, JsonProperty} from "json2typescript";
+import {StepOption} from "@/app/models/step-option.model";
 
-// TODO : Fix this !
-export interface TypeOptionCopy {
-    excludeFolder?: {
-        source?: string[]
-        dest?: string[]
-    }
-    excludeFile?: {
-        source?: string[]
-        dest?: string[]
-    }
+@JsonObject("CopyExclusionOption")
+export class CopyExclusionOption extends StepOption {
+    @JsonProperty("source", [String], true)
+    source?: string[] = []
+
+    @JsonProperty("dest", [String], true)
+    dest?: string[] = []
 }
 
 @JsonObject("CopyOption")
@@ -28,5 +26,11 @@ export class CopyOption extends StepOption {
 
     @JsonProperty("type", String)
     type: string
+
+    @JsonProperty("excludeFolder", CopyExclusionOption, true)
+    excludeFolder: CopyExclusionOption = undefined
+
+    @JsonProperty("excludeFile", CopyExclusionOption, true)
+    excludeFile: CopyExclusionOption = undefined
 }
 

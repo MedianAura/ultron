@@ -1,4 +1,4 @@
 
-abstract class StepOption {
+export abstract class StepOption {
 
 }

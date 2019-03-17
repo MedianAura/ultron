@@ -1,5 +1,6 @@
 import {JsonObject, JsonProperty} from "json2typescript";
 import {CodecParams} from "@/app/models/codec-param.model";
+import {StepOption} from "@/app/models/step-option.model";
 
 @JsonObject("ConvertOption")
 export class ConvertOption extends StepOption {

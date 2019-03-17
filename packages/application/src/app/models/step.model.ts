@@ -1,4 +1,5 @@
 import {Any, JsonObject, JsonProperty} from "json2typescript";
+import {StepOption} from "@/app/models/step-option.model";
 
 @JsonObject("Step")
 export class Step {
@@ -8,7 +9,5 @@ export class Step {
     @JsonProperty("options", Any)
     jsonOptions: any = undefined;
 
-    setConfigurationOptions(config: object) {
-
-    }
+    options: StepOption = undefined;
 }

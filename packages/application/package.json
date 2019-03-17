@@ -32,6 +32,7 @@
     "async-es": "^2.6.2",
     "fast-glob": "^2.2.6",
     "json2typescript": "^1.2.0",
-    "lodash": "^4.17.11"
+    "lodash": "^4.17.11",
+    "moment": "^2.24.0"
   }
 }

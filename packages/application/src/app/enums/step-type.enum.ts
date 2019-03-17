@@ -9,5 +9,6 @@ export enum StepTypeEnum {
     ECV = 'ecv',
     CMD = 'commands',
     CONVERT = 'convert',
+    REPLACE = 'findReplace',
     GITREBASE = 'gitRebase'
 }
