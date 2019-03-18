@@ -1,36 +1,33 @@
-import {JsonObject, JsonProperty} from "json2typescript";
-import {StepOption} from "@/app/models/step-option.model";
+import {JsonObject, JsonProperty} from 'json2typescript';
+import {StepOption} from '@/app/models/step-option.model';
 
-@JsonObject("CopyExclusionOption")
+@JsonObject('CopyExclusionOption')
 export class CopyExclusionOption extends StepOption {
-    @JsonProperty("source", [String], true)
-    source?: string[] = []
+  @JsonProperty('source', [String], true)
+  public source: string[] = [];
 
-    @JsonProperty("dest", [String], true)
-    dest?: string[] = []
+  @JsonProperty('dest', [String], true)
+  public dest: string[] = [];
 }
 
-@JsonObject("CopyOption")
+@JsonObject('CopyOption')
 export class CopyOption extends StepOption {
-    @JsonProperty("title", String, true)
-    title: string = 'Copy de fichier(S)';
+  @JsonProperty('title', String, true)
+  public title: string = 'Copy de fichier(S)';
 
-    @JsonProperty("mask", [String])
-    mask: string[]
+  @JsonProperty('mask', String)
+  public mask: string = undefined;
 
-    @JsonProperty("from", String)
-    from: string
+  @JsonProperty('from', String)
+  public from: string = undefined;
 
-    @JsonProperty("to", String)
-    to: string
+  @JsonProperty('to', String)
+  public to: string = undefined;
 
-    @JsonProperty("type", String)
-    type: string
+  @JsonProperty('excludeFolder', CopyExclusionOption, true)
+  public excludeFolder: CopyExclusionOption = undefined;
 
-    @JsonProperty("excludeFolder", CopyExclusionOption, true)
-    excludeFolder: CopyExclusionOption = undefined
-
-    @JsonProperty("excludeFile", CopyExclusionOption, true)
-    excludeFile: CopyExclusionOption = undefined
+  @JsonProperty('excludeFile', CopyExclusionOption, true)
+  public excludeFile: CopyExclusionOption = undefined;
 }
 

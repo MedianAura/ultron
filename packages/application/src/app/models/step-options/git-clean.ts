@@ -7,8 +7,8 @@ export class GitCleanOption extends StepOption {
     title: string = 'Git clean';
 
     @JsonProperty("folder", [String])
-    folder: string[]
+    folder: string[] = []
 
     @JsonProperty("file", [String])
-    file: string[]
+    file: string[] = undefined
 }

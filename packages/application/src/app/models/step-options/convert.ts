@@ -8,8 +8,8 @@ export class ConvertOption extends StepOption {
     title: string = 'Conversion de fichier(s)';
 
     @JsonProperty("root", String)
-    root: string
+    root: string = undefined
 
     @JsonProperty("codec", [CodecParams])
-    codec: CodecParams[]
+    codec: CodecParams[] = []
 }

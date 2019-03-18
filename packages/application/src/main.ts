@@ -1,13 +1,12 @@
-import {CoreController} from "@/app/core";
-
-const core = new CoreController()
+import {CoreController} from '@/app/core';
 
 try {
-    core.setElectron({})
-    core.setApplicationPath("D:\\WebServer\\vhost\\Node\\ultron")
-    core.start()
+  CoreController.setElectron({});
+  CoreController.setApplicationPath('D:\\WebServer\\vhost\\Node\\ultron');
+  CoreController.start();
 
-    core.loadSelectedApplication("Accueil")
+  CoreController.loadSelectedApplication('Accueil');
+  CoreController.getApplicationController().setRecipe('Test');
 } catch (e) {
-    console.error((<Error>e).message)
+  console.error((e as Error).message);
 }

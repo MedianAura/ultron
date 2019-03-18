@@ -1,67 +1,80 @@
-import {Application} from "@/app/models/application.model";
-import {GitEnvironnement} from "@/app/enums/git-env.enum";
-import {Version} from "@/app/models/version.model";
-import {find} from "lodash";
-import {Step} from "@/app/models/step.model";
-import {StepOptionFactoryService} from "@/app/services/step-option-factory.service";
+import {Application} from '@/app/models/application.model';
+import {GitEnvironnement} from '@/app/enums/git-env.enum';
+import {Version} from '@/app/models/version.model';
+import {find, get} from 'lodash';
+import {Step} from '@/app/models/step.model';
+import {StepOptionFactoryService} from '@/app/services/step-option-factory.service';
+import {GlobalOptionFactoryService} from '@/app/services/global-option-factory.service';
 
-const debug = require('debug')('ultron:ApplicationController')
+const debug = require('debug')('ultron:ApplicationController');
 
 export class ApplicationController {
-    application: Application;
+  public application: Application;
+  public recipe: Version;
+  public head: string;
 
-    init(application: Application) {
-        this.application = application
+  public init(application: Application) {
+    this.application = application;
+  }
+
+  public start() {
+    this.setStepInformation()
+      .then(() => this.application.buildLocaldir())
+      .then(() => this.application.setLocalGit())
+      .then(() => this.application.getGitVersion())
+      .then(() => this.application.getEnvVersion())
+      .catch((err: Error) => {
+        debug(err.message);
+      });
+  }
+
+  public setRecipe(name: string) {
+    const recipe: Version = find(this.application.versions, {name});
+    if (typeof recipe === 'undefined') {
+      throw Error(`Application <${this.application.name}> has no recipe with the name <${name}>`);
     }
 
-    start() {
-        this.setStepInformation()
-            .catch((err: Error) => {
-                debug(err.message)
-            })
+    this.recipe = recipe;
+  }
+
+  public setGitVersion(type: GitEnvironnement, version: string) {
+    const list: string[] = get(this.application.gitHeads, [type], undefined);
+    if (typeof list === 'undefined') {
+      throw Error(`Git Version must be either <${GitEnvironnement.TAG}> or <${GitEnvironnement.BRANCH}>`);
     }
 
-    setRecipe(name: string) {
-        let recipe: Version = find(this.application.versions, {name: name})
-        if (typeof recipe === "undefined")
-            throw Error(`Application <${this.application.name}> has no recipe with the name <${name}>`)
 
-        // Do something
+    const isValid: boolean = list.includes(version);
+    if (!isValid) {
+      throw Error(`Git Version for <${type}> doesn't include version <${version}>`);
     }
 
-    setGitVersion(type: GitEnvironnement, version: string) {
+    this.head = version;
+  }
 
-    }
+  private setStepInformation(): Promise<boolean> {
+    return new Promise<boolean>((resolve, reject) => {
+      this.application.versions.forEach((version) => {
+        GlobalOptionFactoryService.setApplicationGlobal(version);
 
-    private setStepInformation(): Promise<boolean> {
-        return new Promise<boolean>((resolve, reject) => {
-            this.application.versions.forEach((version) => {
-                version.steps.forEach((step: Step) => {
-                    try {
-                        StepOptionFactoryService.getStepOptions(step, this.application.config)
-                    } catch (e) {
-                        reject(e)
-                    }
-                })
-            })
+        version.steps.forEach((step: Step) => {
+          try {
+            StepOptionFactoryService.getStepOptions(step, this.application.config);
+          } catch (e) {
+            reject(e);
+          }
+        });
+      });
 
-            resolve(true)
-        })
-    }
+      resolve(true);
+    });
+  }
 
-    private setGitInformation() {
-        // Create git instance on the object
-    }
+  private setGitInformation() {
+    // Create git instance on the object
+  }
 
-    private getEnvironnementInformation() {
-        // Load version from server
-    }
-
-    private getGitTag() {
-        // Get git tag information
-    }
-
-    private getGitBranch() {
-        // Get git branch
-    }
+  private getEnvironnementInformation() {
+    // Load version from server
+  }
 }

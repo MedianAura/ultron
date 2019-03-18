@@ -1,26 +1,26 @@
-import {JsonObject, JsonProperty} from "json2typescript";
-import {StepOption} from "@/app/models/step-option.model";
+import {JsonObject, JsonProperty} from 'json2typescript';
+import {StepOption} from '@/app/models/step-option.model';
 
-@JsonObject("FindReplaceOption")
+@JsonObject('FindReplaceOption')
 export class FindReplaceOption extends StepOption {
-    @JsonProperty("title", String, true)
-    title: string = 'Conversion de fichier(s)';
+  @JsonProperty('title', String, true)
+  public title: string = 'Conversion de fichier(s)';
 
-    @JsonProperty("inputPath", String)
-    inputPath: string;
+  @JsonProperty('inputPath', String)
+  public inputPath: string = undefined;
 
-    @JsonProperty("inputMask", [String])
-    inputMask: string[];
+  @JsonProperty('inputMask', [String])
+  public inputMask: string[] = [];
 
-    @JsonProperty("outputPath", String)
-    outputPath: string;
+  @JsonProperty('outputPath', String)
+  public outputPath: string = undefined;
 
-    @JsonProperty("codec", String)
-    codec: string;
+  @JsonProperty('codec', String)
+  public codec: string = undefined;
 
-    @JsonProperty("find", String)
-    find: string;
+  @JsonProperty('find', String)
+  public find: string = undefined;
 
-    @JsonProperty("replace", String)
-    replace: string
+  @JsonProperty('replace', String)
+  public replace: string = undefined;
 }

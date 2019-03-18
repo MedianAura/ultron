@@ -47,12 +47,14 @@
     }
   },
   "dependencies": {
+    "application": "1.0.0",
     "electron-compile": "^6.4.4",
     "electron-squirrel-startup": "^1.0.0",
-    "walk-back": "^3.0.1",
-    "application": "1.0.0"
+    "sprintf-js": "^1.1.2",
+    "walk-back": "^3.0.1"
   },
   "devDependencies": {
+    "@types/sprintf-js": "^1.1.2",
     "babel-plugin-transform-async-to-generator": "^6.24.1",
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",

@@ -1,4 +1,4 @@
 export enum GitEnvironnement {
-    TAG = "tag",
-    BRANCH = "branch"
+    TAG = "tags",
+    BRANCH = "branches"
 }
