@@ -40,6 +40,8 @@
     "json2typescript": "^1.2.0",
     "lodash": "^4.17.11",
     "moment": "^2.24.0",
+    "node-fetch": "^2.3.0",
+    "safer-eval": "^1.3.2",
     "semver-sort": "^0.0.4",
     "simple-git": "^1.107.0",
     "sprintf-js": "^1.1.2"

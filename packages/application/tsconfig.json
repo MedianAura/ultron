@@ -14,9 +14,6 @@
     "baseUrl": ".",
     "types": ["node"],
     "paths": {
-      "*": [
-        "types/*"
-      ],
       "@/*": [
         "src/*"
       ]

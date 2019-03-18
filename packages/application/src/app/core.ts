@@ -50,14 +50,14 @@ class Core {
     this.setApplicationConfiguration();
   }
 
-  public loadSelectedApplication(name: string) {
+  public loadSelectedApplication(name: string): Promise<void> {
     const application: Application = find(this.applications, {name});
     if (typeof application === 'undefined') {
       throw Error(`Application <${name}> is not found in the list of application.`);
     }
 
     this.applicationController.init(application);
-    this.applicationController.start();
+    return this.applicationController.start();
   }
 
   public getApplicationController(): ApplicationController {
@@ -76,7 +76,7 @@ class Core {
   }
 
   private setApplicationConfiguration() {
-    let entries: string[] = fg.sync(['./data/**/acc*.json'], {cwd: this.path.config});
+    let entries: string[] = fg.sync(['./data/**/*.json'], {cwd: this.path.config});
     entries = entries.map((entry) => path.resolve(this.path.config, entry));
     this.applications = JsonConfiguration.setJSONConfiguration(entries);
   }

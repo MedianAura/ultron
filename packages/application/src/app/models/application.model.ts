@@ -5,7 +5,14 @@ import git, {FetchResult, SimpleGit} from 'simple-git/promise';
 import * as path from 'path';
 import Bluebird, {Inspection} from 'bluebird';
 import {CoreController} from '@/app/core';
-import {uniq} from 'lodash';
+import {uniq, get} from 'lodash';
+import * as fetch from 'node-fetch';
+
+const {SaferEval} = require('safer-eval')
+const https = require("https");
+const agent = new https.Agent({
+  rejectUnauthorized: false
+})
 
 const debug = require('debug')('ultron:model:ApplicationModel');
 
@@ -47,7 +54,7 @@ export class Application {
   };
 
   get path(): string {
-    return path.resolve(CoreController.path.work, this.name);
+    return path.resolve(CoreController.path.work, 'local', this.name);
   }
 
   public buildWorkdir(path: string) {
@@ -70,7 +77,7 @@ export class Application {
       return this.gitInstance.fetch(['--all']);
     }
 
-    return this.gitInstance.clone(this.config.config.git.repositoryUrl, this.path);
+    return this.gitInstance.clone(get(this.config, 'git.repositoryUrl', null), this.path);
   }
 
   public getGitVersion(): Promise<null> {
@@ -84,13 +91,12 @@ export class Application {
           const aListHead = [];
           const aListTag = [];
 
-
           for (const i in data_list) {
             if (this.fuzzySearch(['release/rel-', 'heads/master', 'heads/release-master', 'env/production'], data_list[i])) {
               continue;
             }
 
-            const tempv = data_list[i].split(/\s/)[1].replace('^{}', '');
+            const tempv = get(data_list[i].split(/\s/), [1], '').replace('^{}', '');
             if (data_list[i].indexOf('refs/tags/') > -1) {
               aListTag.push(tempv.replace('refs/tags/', ''));
             } else if (data_list[i].indexOf('refs/heads/') > -1) {
@@ -98,8 +104,8 @@ export class Application {
             }
           }
 
-          this.gitHeads.tags = uniq(semverSort.asc(aListTag));
-          this.gitHeads.branches = uniq(semverSort.asc(aListHead));
+          this.gitHeads.tags = uniq(semverSort.desc(aListTag));
+          this.gitHeads.branches = uniq(semverSort.desc(aListHead));
           resolve();
         });
     });
@@ -110,11 +116,10 @@ export class Application {
     const fs = require('fs-extra');
 
     this.environnements.forEach((env) => {
-      if (env.path.indexOf('http') > -1) {
-        aListeVersion.push(
-          fetch(env.path)
-            .then((response) => response.text()),
-        );
+      if (env.path.indexOf('https:') > -1) {
+        aListeVersion.push(fetch(env.path, {agent}).then((response: Response) => response.text()));
+      } else if (env.path.indexOf('http:') > -1) {
+        aListeVersion.push(fetch(env.path).then((response: Response) => response.text()));
       } else {
         aListeVersion.push(fs.readFile(env.path, 'utf8'));
       }
@@ -146,21 +151,9 @@ export class Application {
 
   private formatVersion(version: string) {
     if (typeof version === 'string' && version.indexOf('oRxvVersion') > -1) {
-      if (version.indexOf('version_string') > -1) {
-        return version
-          .replace(/[\S\s]+version_string\s*:\s*/i, '')
-          .replace(/\",\s[\S\s]+$/, '')
-          .replace('"', '');
-      } else {
-
-        return version
-          .replace(/[\S\s]+major\s*:\s*/i, '')
-          .replace(/\D[^,]minor\s*:\s*/i, '')
-          .replace(/\D[^,]revision\s*:\s*/i, '')
-          .replace(/\D[^,]build_number\s*:\s*/i, '')
-          .replace(/,/g, '.')
-          .replace(/\.\s[\S\s]+$/, '');
-      }
+      const safer = new SaferEval()
+      const res: any = safer.runInContext(version.split('=')[1].trim())
+      return [res.major, res.minor, res.revision, res.build_number].join('.')
     }
     return 'N/D';
   }
