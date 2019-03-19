@@ -1,14 +1,17 @@
-import {Any, JsonObject, JsonProperty} from 'json2typescript';
+import {JsonObject, JsonProperty} from 'json2typescript';
 import {Step} from '@/app/models/step.model';
 import {VersionTypeEnum} from '@/app/enums/version-type.enum';
 import {get} from 'lodash';
 import * as path from 'path';
 import TYPES from '@/app/types/TYPES';
 import {UltronConfiguration} from '@/app/models/ultron-configuration.model';
-import container from '@/app/container';
+import {lazyInject} from '@/app/container';
 
 @JsonObject('Version')
 export class Version {
+
+  @lazyInject(TYPES.UltronConfiguration)
+  private ultron: UltronConfiguration;
 
   @JsonProperty('name', String)
   public name: string = undefined;
@@ -36,8 +39,7 @@ export class Version {
   }
 
   public getWorkPath(): string {
-    let ultron = container.get<UltronConfiguration>(TYPES.UltronConfiguration)
-    return path.resolve(ultron.work, 'work', get(this, 'workPath', this.name)) + '\\';
+    return path.resolve(this.ultron.work, 'work', get(this, 'workPath', this.name)) + '\\';
   }
 
   public getArchiveRootDir(): string {
