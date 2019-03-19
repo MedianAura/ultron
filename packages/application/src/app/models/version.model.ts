@@ -6,6 +6,7 @@ import * as path from 'path';
 import TYPES from '@/app/types/TYPES';
 import {UltronConfiguration} from '@/app/models/ultron-configuration.model';
 import {lazyInject} from '@/app/container';
+import {validate, ValidationError} from 'class-validator';
 
 @JsonObject('Version')
 export class Version {
@@ -33,6 +34,28 @@ export class Version {
 
   @JsonProperty('steps', [Step])
   public steps: Step[] = [];
+
+  public validate(): void {
+    let aIsValid: Promise<ValidationError[]>[] = this.steps.map((step) => validate(step));
+
+    Promise.all(aIsValid)
+      .then((errors: ValidationError[][]) => {
+        let hasErrors = errors.filter((error) => error.length > 0)
+
+        if (hasErrors.length > 0) {
+          hasErrors.forEach((error) => {
+            error.forEach((e) => {
+              e.children.forEach((child) => {
+                console.error(child.constraints)
+              })
+            })
+          })
+          Promise.reject(false)
+        }
+
+        Promise.resolve(true)
+      })
+  }
 
   public getCustomName(name: string): string {
     return get(this, 'customName', name);

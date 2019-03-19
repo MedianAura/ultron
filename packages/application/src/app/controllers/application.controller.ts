@@ -46,6 +46,8 @@ export class ApplicationController {
     }
 
     this.recipe = recipe;
+    this.recipe.validate()
+
     return Promise.resolve()
   }
 
