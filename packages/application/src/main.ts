@@ -1,16 +1,16 @@
-import {CoreController} from '@/app/core';
+import {Core} from '@/app/core';
 import {GitEnvironnement} from '@/app/enums/git-env.enum';
 
 console.time()
 
 try {
-  CoreController.setElectron({});
-  CoreController.setApplicationPath('C:\\wamp\\www\\electron\\ultron-reborn');
-  CoreController.start();
+  Core.setElectron({});
+  Core.setApplicationPath('C:\\wamp\\www\\electron\\ultron-reborn');
+  Core.start();
 
-  CoreController.loadSelectedApplication('Accueil')
-    .then(() => CoreController.getApplicationController().setRecipe('Test'))
-    .then(() => CoreController.getApplicationController().setGitVersion(GitEnvironnement.TAG, '1.4.2.4'))
+  Core.loadSelectedApplication('Accueil')
+    .then(() => Core.getApplicationController().setRecipe('Test'))
+    .then(() => Core.getApplicationController().setGitVersion(GitEnvironnement.TAG, '1.4.2.4'))
     .then(() => {
       console.timeEnd()
     })

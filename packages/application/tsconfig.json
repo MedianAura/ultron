@@ -10,9 +10,9 @@
     "noImplicitAny": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "sourceMap": false,
+    "sourceMap": true,
     "baseUrl": ".",
-    "types": ["node"],
+    "types": ["node", "reflect-metadata"],
     "paths": {
       "@/*": [
         "src/*"

@@ -3,10 +3,13 @@ import {Step} from '@/app/models/step.model';
 import {VersionTypeEnum} from '@/app/enums/version-type.enum';
 import {get} from 'lodash';
 import * as path from 'path';
-import {CoreController} from '@/app/core';
+import TYPES from '@/app/types/TYPES';
+import {UltronConfiguration} from '@/app/models/ultron-configuration.model';
+import container from '@/app/container';
 
 @JsonObject('Version')
 export class Version {
+
   @JsonProperty('name', String)
   public name: string = undefined;
 
@@ -33,7 +36,9 @@ export class Version {
   }
 
   public getWorkPath(): string {
-    return path.resolve(CoreController.path.work, 'work', get(this, 'workPath', this.name)) + '\\';
+    let ultron = container.get<UltronConfiguration>(TYPES.UltronConfiguration)
+    console.log(ultron)
+    return path.resolve(ultron.work, 'work', get(this, 'workPath', this.name)) + '\\';
   }
 
   public getArchiveRootDir(): string {

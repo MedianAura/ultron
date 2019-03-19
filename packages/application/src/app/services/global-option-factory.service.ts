@@ -1,8 +1,11 @@
 import {each} from 'lodash';
-import {CoreController} from '@/app/core';
 import {Tools} from '@/app/helpers/tools';
 import * as path from 'path';
 import {Version} from '@/app/models/version.model';
+import {inject, injectable} from 'inversify';
+import TYPES from '@/app/types/TYPES';
+import {UltronConfiguration} from '@/app/models/ultron-configuration.model';
+import {Application} from '@/app/models/application.model';
 
 const debug = require('debug')('ultron:service:GlobalOptionFactory');
 
@@ -10,7 +13,11 @@ interface OptionReplace {
   [key: string]: any;
 }
 
-class GlobalOptionFactory {
+@injectable()
+export class GlobalOptionFactory {
+  @inject(TYPES.UltronConfiguration)
+  private config: UltronConfiguration
+
   private global: OptionReplace = {
     '%disque%': undefined,
     '%disque_s%': undefined,
@@ -26,9 +33,9 @@ class GlobalOptionFactory {
 
   public setGlobal() {
     this.global = {
-      '%disque%': Tools.getDrive(CoreController.path.app, CoreController.isDev),
-      '%disque_s%': Tools.getArchiveDrive(CoreController.path.app, CoreController.isDev),
-      '%workRootPath%': path.resolve(CoreController.path.work, 'work').replace(/\\/g, '\\\\'),
+      '%disque%': Tools.getDrive(this.config.app, this.config.isDev),
+      '%disque_s%': Tools.getArchiveDrive(this.config.app, this.config.isDev),
+      '%workRootPath%': path.resolve(this.config.work, 'work').replace(/\\/g, '\\\\'),
       '%timestamp%': new Date().getTime(),
     };
   }
@@ -37,9 +44,9 @@ class GlobalOptionFactory {
     return this.doReplace(this.global, json);
   }
 
-  public setApplicationGlobal(version: Version) {
+  public setApplicationGlobal(version: Version, application: Application) {
     this.versions = {
-      '%customName%': version.getCustomName(CoreController.getApplicationController().application.name),
+      '%customName%': version.getCustomName(application.name),
       '%workPath%': version.getWorkPath().replace(/\\/g, '\\\\'),
       '%archiveRootDir%': version.getArchiveRootDir().replace(/\\/g, '\\\\')
     };
@@ -61,5 +68,3 @@ class GlobalOptionFactory {
     return json;
   }
 }
-
-export const GlobalOptionFactoryService = new GlobalOptionFactory();

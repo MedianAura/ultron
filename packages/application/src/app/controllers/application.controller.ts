@@ -2,16 +2,25 @@ import {Application} from '@/app/models/application.model';
 import {GitEnvironnement} from '@/app/enums/git-env.enum';
 import {Version} from '@/app/models/version.model';
 import {find, get} from 'lodash';
+import {GlobalOptionFactory} from '@/app/services/global-option-factory.service';
+import {StepOptionFactory} from '@/app/services/step-option-factory.service';
+import TYPES from '@/app/types/TYPES';
+import {inject, injectable} from 'inversify';
 import {Step} from '@/app/models/step.model';
-import {StepOptionFactoryService} from '@/app/services/step-option-factory.service';
-import {GlobalOptionFactoryService} from '@/app/services/global-option-factory.service';
 
 const debug = require('debug')('ultron:ApplicationController');
 
+@injectable()
 export class ApplicationController {
   public application: Application;
   public recipe: Version;
   public head: string;
+
+  @inject(TYPES.StepOptionFactory)
+  private StepOptionFactory: StepOptionFactory;
+
+  @inject(TYPES.GlobalOptionFactory)
+  private GlobalOptionFactory: GlobalOptionFactory;
 
   public init(application: Application) {
     this.application = application;
@@ -59,11 +68,11 @@ export class ApplicationController {
   private setStepInformation(): Promise<boolean> {
     return new Promise<boolean>((resolve, reject) => {
       this.application.versions.forEach((version) => {
-        GlobalOptionFactoryService.setApplicationGlobal(version);
+        this.GlobalOptionFactory.setApplicationGlobal(version, this.application);
 
         version.steps.forEach((step: Step) => {
           try {
-            StepOptionFactoryService.getStepOptions(step, this.application.config);
+            this.StepOptionFactory.getStepOptions(step, this.application.config);
           } catch (e) {
             reject(e);
           }
@@ -72,13 +81,5 @@ export class ApplicationController {
 
       resolve(true);
     });
-  }
-
-  private setGitInformation() {
-    // Create git instance on the object
-  }
-
-  private getEnvironnementInformation() {
-    // Load version from server
   }
 }

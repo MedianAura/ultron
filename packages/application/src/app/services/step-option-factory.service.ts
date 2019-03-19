@@ -3,7 +3,9 @@ import {JsonFactoryService} from '@/app/services/json-factory.service';
 import {StepOption} from '@/app/models/step-option.model';
 import {Step} from '@/app/models/step.model';
 import {StepTypeEnum} from '@/app/enums/step-type.enum';
-import {GlobalOptionFactoryService} from '@/app/services/global-option-factory.service';
+import {GlobalOptionFactory} from '@/app/services/global-option-factory.service';
+import {inject, injectable} from 'inversify';
+import TYPES from '@/app/types/TYPES';
 import {
   CommandOption,
   ConvertOption,
@@ -19,9 +21,14 @@ import {
   ZipOption
 } from '@/app/models/step-options';
 
+
 const debug = require('debug')('ultron:service:StepOptionFactory');
 
-class StepOptionFactory {
+@injectable()
+export class StepOptionFactory {
+
+  @inject(TYPES.GlobalOptionFactory)
+  private GlobalOptionFactory: GlobalOptionFactory
 
   getStepOptions(step: Step, config: object) {
     if (typeof step.jsonOptions === 'string') {
@@ -41,7 +48,7 @@ class StepOptionFactory {
 
   private getClass(type: string, step: Step): StepOption {
     let temp: object = JSON.parse(
-      GlobalOptionFactoryService.replaceApplicationGlobalVariable(JSON.stringify(step.jsonOptions))
+      this.GlobalOptionFactory.replaceApplicationGlobalVariable(JSON.stringify(step.jsonOptions))
     );
 
     switch (type) {
@@ -74,5 +81,3 @@ class StepOptionFactory {
     }
   }
 }
-
-export const StepOptionFactoryService = new StepOptionFactory();

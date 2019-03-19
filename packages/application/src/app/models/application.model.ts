@@ -4,9 +4,12 @@ import {Version} from '@/app/models/version.model';
 import git, {FetchResult, SimpleGit} from 'simple-git/promise';
 import * as path from 'path';
 import Bluebird, {Inspection} from 'bluebird';
-import {CoreController} from '@/app/core';
 import {uniq, get} from 'lodash';
 import * as fetch from 'node-fetch';
+import TYPES from '@/app/types/TYPES';
+import {UltronConfiguration} from '@/app/models/ultron-configuration.model';
+import container from '@/app/container';
+
 
 const {SaferEval} = require('safer-eval')
 const https = require("https");
@@ -23,6 +26,7 @@ interface GitHeads {
 
 @JsonObject('Application')
 export class Application {
+
   @JsonProperty('type', String)
   public type: string = undefined;
 
@@ -54,7 +58,8 @@ export class Application {
   };
 
   get path(): string {
-    return path.resolve(CoreController.path.work, 'local', this.name);
+    let ultron = container.get<UltronConfiguration>(TYPES.UltronConfiguration)
+    return path.resolve(ultron.work, 'local', this.name);
   }
 
   public buildWorkdir(path: string) {
