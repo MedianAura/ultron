@@ -10,7 +10,6 @@ import TYPES from '@/app/types/TYPES';
 import {UltronConfiguration} from '@/app/models/ultron-configuration.model';
 import container from '@/app/container';
 
-
 const {SaferEval} = require('safer-eval')
 const https = require("https");
 const agent = new https.Agent({

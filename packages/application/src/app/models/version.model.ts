@@ -37,7 +37,6 @@ export class Version {
 
   public getWorkPath(): string {
     let ultron = container.get<UltronConfiguration>(TYPES.UltronConfiguration)
-    console.log(ultron)
     return path.resolve(ultron.work, 'work', get(this, 'workPath', this.name)) + '\\';
   }
 

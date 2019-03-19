@@ -4,6 +4,7 @@ const log = require('fancy-log')
 const babel = require('gulp-babel')
 const plumber = require('gulp-plumber')
 const ts = require('gulp-typescript')
+const sourcemaps = require('gulp-sourcemaps')
 
 const tsProject = ts.createProject('./tsconfig.json')
 const tsFiles = ['./src/**/*.ts']
@@ -11,21 +12,25 @@ const jsFiles = ['./src/**/*.js', '!gulpfile.js', '!tasks/**/*.js', '!dist/**', 
 
 function buildTS () {
   return gulp.src(tsFiles)
-    .pipe(plumber())
-    .pipe(tsProject()
-      .on('error', log))
-    .pipe(babel()
-      .on('error', log))
-    .pipe(uglify().on('error', log))
+    .pipe(sourcemaps.init())
+      .pipe(plumber())
+      .pipe(tsProject()
+        .on('error', log))
+      .pipe(babel()
+        .on('error', log))
+      .pipe(uglify().on('error', log))
+    .pipe(sourcemaps.write())
     .pipe(gulp.dest('dist'))
 }
 
 function buildJS () {
   return gulp.src(jsFiles)
-    .pipe(plumber())
-    .pipe(babel()
-      .on('error', log))
-    .pipe(uglify().on('error', log))
+    .pipe(sourcemaps.init())
+      .pipe(plumber())
+      .pipe(babel()
+        .on('error', log))
+      .pipe(uglify().on('error', log))
+    .pipe(sourcemaps.write())
     .pipe(gulp.dest('dist'))
 }
 
