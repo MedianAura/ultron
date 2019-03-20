@@ -2,7 +2,7 @@
   "name": "application",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/main.js",
+  "main": "index.js",
   "scripts": {
     "start": "cross-env DEBUG=ultron:* node dist/main.js"
   },

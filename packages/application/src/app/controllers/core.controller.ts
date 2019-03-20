@@ -29,8 +29,14 @@ export class CoreController {
 
   private applications: Application[] = [];
 
-  public setElectron(electron: object) {
+  public setElectron(ipcMain: any) {
+    ipcMain.on('talkie-walkie', (event: any, arg: any) => {
+      event.sender.send('talkie-walkie', {'request': 'get-applications', 'response': this.applications})
+    })
+  }
 
+  public setDevelopement(isDev: boolean) {
+    this.path.isDev = isDev
   }
 
   public setApplicationPath(path: string) {

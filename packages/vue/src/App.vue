@@ -1,29 +1,42 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
+    <NavigationComponent></NavigationComponent>
     <router-view/>
   </div>
 </template>
 
-<style lang="less">
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-#nav {
-  padding: 30px;
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-    &.router-link-exact-active {
-      color: #42b983;
+<script lang="ts">
+  import {Component, Vue} from 'vue-property-decorator';
+  import NavigationComponent from './components/navigation.component.vue';
+
+  @Component({
+    components: {
+      NavigationComponent
     }
+  })
+  export default class App extends Vue {
+
   }
-}
+</script>
+
+<style lang="css">
+  @import "~bootstrap/dist/css/bootstrap.min.css";
+  @import "~noty/lib/noty.css";
+  @import "~noty/lib/themes/bootstrap-v3.css";
+  @import "~@fortawesome/fontawesome-free/css/all.css";
+
+  main {
+    margin-top: 10px;
+  }
+
+  #anmodal .modal-body {
+    max-height: 75vh;
+    overflow: auto;
+  }
+
+  #logmodal .modal-body {
+    max-height: 90vh;
+    overflow: auto;
+  }
+
 </style>
