@@ -9,23 +9,18 @@
       <div class="col-md-5">
         <version-section :application="application"></version-section>
       </div>
-      <div class="col-md-7">
-        <log-section :application="application"></log-section>
-      </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-  import LogComponent from './log.component.vue';
   import VersionComponent from './versions.component.vue';
   import RecipeSelection from './recipe-selection.component.vue';
-  import {Component, Vue, Prop} from 'vue-property-decorator';
-
+  import {Component, Vue} from 'vue-property-decorator';
+  
   @Component({
     components: {
       versionSection: VersionComponent,
-      logSection: LogComponent,
       recipeSelectionSection: RecipeSelection
     }
   })

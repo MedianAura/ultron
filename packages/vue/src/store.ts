@@ -2,7 +2,6 @@ import Vue from 'vue';
 import Vuex, {StoreOptions} from 'vuex';
 import {RootState} from './types';
 import {login} from './stores/login.store';
-import {Logging} from './stores/logs.store';
 
 const packageData = require('../package.json');
 
@@ -14,8 +13,7 @@ const store: StoreOptions<RootState> = {
     login: {}
   },
   modules: {
-    login,
-    Logging
+    login
   }
 };
 

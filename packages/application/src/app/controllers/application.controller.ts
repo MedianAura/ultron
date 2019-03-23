@@ -28,10 +28,10 @@ export class ApplicationController {
 
   public start(): Promise<void> {
     return this.setStepInformation()
-      .then(() => this.application.buildLocaldir())
-      .then(() => this.application.setLocalGit())
-      .then(() => this.application.getGitVersion())
-      .then(() => this.application.getEnvVersion())
+      // .then(() => this.application.buildLocaldir())
+      // .then(() => this.application.setLocalGit())
+      // .then(() => this.application.getGitVersion())
+      // .then(() => this.application.getEnvVersion())
       .then(() => {
       })
       .catch((err: Error) => {
@@ -46,7 +46,6 @@ export class ApplicationController {
     }
 
     this.recipe = recipe;
-    this.recipe.validate()
 
     return Promise.resolve()
   }

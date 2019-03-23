@@ -22,9 +22,7 @@
   })
   export default class MainPage extends Vue {
     created() {
-      EventManagerService.send({'request': 'get-applications'}).then((result) => {
-        console.log(result)
-      })
+      EventManagerService.getApplications()
     }
   }
 </script>

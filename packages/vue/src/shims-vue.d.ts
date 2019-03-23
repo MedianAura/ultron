@@ -5,3 +5,4 @@ declare module '*.vue' {
 
 declare module 'epic-spinners';
 declare module 'bootstrap-vue';
+declare module 'eiphop';

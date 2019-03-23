@@ -43,8 +43,9 @@
     }
   },
   "dependencies": {
-    "application": "1.0.0",
+    "application": "^1.0.0",
     "argparse": "^1.0.10",
+    "eiphop": "^1.0.6",
     "electron-squirrel-startup": "^1.0.0",
     "walk-back": "^3.0.1"
   },

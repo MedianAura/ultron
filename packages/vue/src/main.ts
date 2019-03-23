@@ -26,6 +26,14 @@ Vue.use(VueWait)
 Vue.use(BootstrapVue)
 Vue.use(VeeValidate)
 
+import {setupFrontendListener} from 'eiphop';
+
+if (typeof window.require !== 'undefined') {
+  // listen to ipc responses
+  const electron = window.require('electron')
+  setupFrontendListener(electron);
+}
+
 const wait = new VueWait()
 
 // @ts-ignore
