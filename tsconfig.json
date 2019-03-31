@@ -16,7 +16,7 @@
     "sourceMap": true,
     "baseUrl": ".",
     "outDir": "dist",
-    "types": ["node"],
+    "types": ["node", "reflect-metadata"],
     "paths": {
       "@/*": [
         "src/*"
