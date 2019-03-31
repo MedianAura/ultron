@@ -1,0 +1,12 @@
+declare const app: any, BrowserWindow: any, ipcMain: any;
+declare const ArgumentParser: any;
+declare const Core: any;
+declare const path: any;
+declare const url: any;
+declare const walkBack: any;
+declare let args: any;
+declare let parser: any;
+declare let arg: string[];
+declare let mainWindow: any;
+declare const api: any;
+declare const createWindow: () => void;

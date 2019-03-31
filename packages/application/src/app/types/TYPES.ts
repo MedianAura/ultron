@@ -1,5 +1,5 @@
-let TYPES = {
-  StepOptionFactory: Symbol("StepOptionFactory"),
+const TYPES = {
+  StepOptionFactory: Symbol('StepOptionFactory'),
   CoreController: Symbol('CoreController'),
   UltronConfiguration: Symbol('UltronConfiguration'),
   GlobalOptionFactory: Symbol('GlobalOptionFactory'),

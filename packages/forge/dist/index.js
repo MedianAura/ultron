@@ -1,60 +1,51 @@
-import { Core } from '@ultron/application';
-import { ArgumentParser } from 'argparse';
-import { app, BrowserWindow, ipcMain } from 'electron';
-import path from 'path';
-import url from 'url';
-import walkBack from 'walk-back';
-import './api.js';
-
-// Handle creating/removing shortcuts on Windows when installing/uninstalling.
+'use strict';
+var _a = require('electron'),
+  app = _a.app,
+  BrowserWindow = _a.BrowserWindow,
+  ipcMain = _a.ipcMain;
+var ArgumentParser = require('argparse').ArgumentParser;
+var Core = require('@ultron/application').Core;
+var path = require('path');
+var url = require('url');
+var walkBack = require('walk-back');
 if (require('electron-squirrel-startup')) {
-  // eslint-disable-line global-require
   app.quit();
 }
-
-let args: any;
-const parser = new ArgumentParser({
+var args;
+var parser = new ArgumentParser({
   addHelp: true,
+  version: require('../package').version,
   description: require('../package').description,
   prog: require('../package.json').name,
-  version: require('../package').version,
 });
-
 parser.addArgument(['-d', '--debug'], {
-  action: 'storeTrue',
-  defaultValue: false,
   help: 'Active le mode debug.',
+  defaultValue: false,
+  action: 'storeTrue',
 });
-
 parser.addArgument(['-s', '--server'], {
-  action: 'storeTrue',
-  defaultValue: false,
   help: 'Lance le programme avec un serveur de debug.',
-});
-
-parser.addArgument(['--dev'], {
-  action: 'storeTrue',
   defaultValue: false,
-  help: 'Lance le programme en mode développement.',
+  action: 'storeTrue',
 });
-
-let arg = process.argv.slice(1);
+parser.addArgument(['--dev'], {
+  help: 'Lance le programme en mode développement.',
+  defaultValue: false,
+  action: 'storeTrue',
+});
+var arg = process.argv.slice(1);
 if (process.argv.join(' ').indexOf('electron.exe') > -1) {
   arg = process.argv.slice(2);
 }
-
 try {
   args = parser.parseKnownArgs(arg);
   args = args[0];
 } catch (e) {
   app.quit();
 }
-
-// Keep a global reference of the window object, if you don't, the window will
-// be closed automatically when the JavaScript object is garbage collected.
-let mainWindow: BrowserWindow;
-
-const createWindow = () => {
+var mainWindow;
+var api = require('./api.js');
+var createWindow = function() {
   mainWindow = new BrowserWindow({
     fullscreenable: false,
     useContentSize: true,
@@ -63,13 +54,11 @@ const createWindow = () => {
     height: 924,
     icon: path.join(__dirname, 'assets/ultron_logo.ico'),
   });
-
-  let startURL = url.format({
+  var startURL = url.format({
     pathname: path.join(__dirname, '../dist/index.html'),
     protocol: 'file:',
     slashes: true,
   });
-
   if (args.debug && args.server) {
     startURL = url.format({
       pathname: 'localhost:8080',
@@ -77,41 +66,23 @@ const createWindow = () => {
       slashes: true,
     });
   }
-
   mainWindow.loadURL(startURL);
-
   if (args.debug) {
     mainWindow.webContents.openDevTools({ mode: 'detach' });
   }
-
   global.cmdArgs = args;
 };
-
-// This method will be called when Electron has finished
-// initialization and is ready to create browser windows.
-// Some APIs can only be used after this event occurs.
 app.on('ready', createWindow);
-
-// Quit when all windows are closed.
-app.on('window-all-closed', () => {
-  // On OS X it is common for applications and their menu bar
-  // to stay active until the user quits explicitly with Cmd + Q
+app.on('window-all-closed', function() {
   if (process.platform !== 'darwin') {
     app.quit();
   }
 });
-
-app.on('activate', () => {
-  // On OS X it's common to re-create a window in the app when the
-  // dock icon is clicked and there are no other windows open.
+app.on('activate', function() {
   if (mainWindow === null) {
     createWindow();
   }
 });
-
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and import them here
-
 try {
   Core.setDevelopement(args.dev);
   Core.setElectron(ipcMain);
@@ -120,3 +91,4 @@ try {
 } catch (e) {
   console.error(e.message);
 }
+//# sourceMappingURL=index.js.map

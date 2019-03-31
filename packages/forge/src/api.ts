@@ -1,6 +1,5 @@
-const electron = require('electron')
-const { setupMainHandler } = require('eiphop')
+import { setupMainHandler } from 'eiphop';
+import electron from 'electron';
+import { actions } from './actions/application';
 
-const applicationAction = require('./actions/application')
-
-setupMainHandler(electron, { ...applicationAction }, true)
+setupMainHandler(electron, { ...actions }, true);

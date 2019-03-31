@@ -1,4 +1,5 @@
 dependencies:
+  '@types/node': 11.12.2
   '@ultron/application': 'link:../application'
   argparse: 1.0.10
   eiphop: 1.0.6
@@ -11,7 +12,6 @@ devDependencies:
   '@electron-forge/maker-squirrel': 6.0.0-beta.33
   '@electron-forge/maker-zip': 6.0.0-beta.33
   electron: 4.1.0
-  prettier: 1.16.4
 lockfileVersion: 5
 packages:
   /@electron-forge/async-ora/6.0.0-beta.33:
@@ -265,7 +265,6 @@ packages:
     resolution:
       integrity: sha512-DT25xX/YgyPKiHFOpNuANIQIVvYEwCWXgK2jYYwqgaMrYE6+tq+DtmMwlD3drl6DJbUwtlIDnn0d7tIn/EbXBg==
   /@types/node/11.12.2:
-    dev: true
     resolution:
       integrity: sha512-c82MtnqWB/CqqK7/zit74Ob8H1dBdV7bK+BcErwtXbe0+nUGkgzq5NTDmRW/pAv2lFtmeNmW95b0zK2hxpeklg==
   /abbrev/1.1.1:
@@ -2075,13 +2074,6 @@ packages:
       node: '>=6'
     resolution:
       integrity: sha512-GpgvHHocGRyQm74b6FWEZZVRroHKE1I0/BTjAmySaohK+cUn+hZpbqXkc3KWgW3gQYkqcQej35FohcT0FRlkRQ==
-  /prettier/1.16.4:
-    dev: true
-    engines:
-      node: '>=4'
-    hasBin: true
-    resolution:
-      integrity: sha512-ZzWuos7TI5CKUeQAtFd6Zhm2s6EpAD/ZLApIhsF9pRvRtM1RFo61dM/4MSRUA0SuLugA/zgrZD8m0BaY46Og7g==
   /pretty-bytes/1.0.4:
     dependencies:
       get-stdin: 4.0.1
@@ -2860,10 +2852,10 @@ specifiers:
   '@electron-forge/maker-rpm': 6.0.0-beta.33
   '@electron-forge/maker-squirrel': 6.0.0-beta.33
   '@electron-forge/maker-zip': 6.0.0-beta.33
+  '@types/node': ^11.12.2
   '@ultron/application': ^1.0.0
   argparse: ^1.0.10
   eiphop: ^1.0.6
   electron: 4.1.0
   electron-squirrel-startup: ^1.0.0
-  prettier: ^1.16.4
   walk-back: ^3.0.1

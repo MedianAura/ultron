@@ -21,4 +21,16 @@
 //   console.error((e as Error).message);
 // }
 
-export { Core } from '@/app/core';
+require('module-alias/register');
+
+import 'es6-shim';
+import 'reflect-metadata';
+import './app/inversify.config';
+
+import container from './app/container';
+
+import TYPES from './app/types/TYPES';
+
+import { CoreController } from './app/controllers/core.controller';
+
+export const Core: CoreController = container.get<CoreController>(TYPES.CoreController);

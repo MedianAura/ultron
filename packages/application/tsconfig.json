@@ -1,32 +1,16 @@
 {
+  "extends": "../../tsconfig.json",
   "compilerOptions": {
     "declaration": true,
     "target": "es5",
-    "moduleResolution": "node",
-    "module": "commonjs",
-    "removeComments": true,
-    "strict": true,
-    "importHelpers": true,
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-    "strictNullChecks": false,
-    "noImplicitAny": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "sourceMap": true,
+    "module": "esnext",
     "baseUrl": ".",
     "outDir": "dist",
-    "types": ["node"],
+    "declarationDir": "dts",
+    "types": ["node", "reflect-metadata"],
     "paths": {
-      "@/*": [
-        "src/*"
-      ]
+      "@/*": ["src/*"]
     }
   },
-  "include": [
-    "src/**/*.ts"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "include": ["src/**/*.ts"]
 }

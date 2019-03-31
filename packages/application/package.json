@@ -3,11 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "main": "dist/main.js",
-  "types": "dist/main.d.ts",
+  "types": "dts/**/*.d.ts",
   "scripts": {
     "start": "cross-env DEBUG=ultron:* node dist/main.js",
-    "watch:ts": "nodemon -e ts --watch src --exec tsc",
-    "build": "tsc"
+    "watch:ts": "tsc --watch",
+    "build:ts": "tsc"
   },
   "author": "",
   "license": "ISC",
@@ -30,14 +30,9 @@
     "gulp-sourcemaps": "^2.6.5",
     "gulp-typescript": "^5.0.1",
     "gulp-uglify": "^3.0.2",
+    "module-alias": "^2.2.0",
     "nodemon": "^1.18.10",
-    "prettier": "^1.16.4",
-    "tslib": "^1.9.3",
-    "tslint": "^5.14.0",
-    "tslint-config-prettier": "^1.18.0",
-    "tslint-eslint-rules": "^5.4.0",
-    "tslint-plugin-prettier": "^2.0.1",
-    "typescript": "^3.3.3333"
+    "typescript": "^3.4.1"
   },
   "dependencies": {
     "async": "^2.6.2",
@@ -60,5 +55,8 @@
     "semver-sort": "^0.0.4",
     "simple-git": "^1.107.0",
     "sprintf-js": "^1.1.2"
+  },
+  "_moduleAliases": {
+    "@": "src"
   }
 }

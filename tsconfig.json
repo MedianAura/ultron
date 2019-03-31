@@ -1,9 +1,9 @@
 {
   "compilerOptions": {
-    "declaration": true,
-    "target": "es5",
+    "declaration": false,
+    "target": "esnext",
     "moduleResolution": "node",
-    "module": "commonjs",
+    "module": "esnext",
     "removeComments": true,
     "strict": true,
     "importHelpers": true,
@@ -14,19 +14,7 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
-    "baseUrl": ".",
-    "outDir": "dist",
-    "types": ["node", "reflect-metadata"],
-    "paths": {
-      "@/*": [
-        "src/*"
-      ]
-    }
+    "types": ["node"]
   },
-  "include": [
-    "src/**/*.ts"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "exclude": ["node_modules"]
 }

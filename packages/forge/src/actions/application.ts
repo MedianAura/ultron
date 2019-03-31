@@ -1,18 +1,16 @@
-const { Core } = require('application')
+import { Core } from '@ultron/application/src/main';
 
-const actions = {
-  'get-applications': (req, res) => {
-    res.send({ applications: Core.applications })
+export const actions = {
+  'get-applications': (req: any, res: any) => {
+    res.send({ applications: Core.applications });
   },
-  'set-application': (req, res) => {
+  'set-application': (req: any, res: any) => {
     // res.send({ applications: Core.applications })
   },
-  'set-recipe': (req, res) => {
+  'set-recipe': (req: any, res: any) => {
     // res.send({ applications: Core.applications })
   },
-  'set-version': (req, res) => {
+  'set-version': (req: any, res: any) => {
     // res.send({ applications: Core.applications })
-  }
-}
-
-module.exports = actions
+  },
+};
