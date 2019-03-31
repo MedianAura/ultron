@@ -1,7 +1,10 @@
 {
   "compilerOptions": {
+    "declaration": true,
     "target": "es6",
     "moduleResolution": "node",
+    "module": "commonjs",
+    "removeComments": true,
     "strict": true,
     "importHelpers": true,
     "experimentalDecorators": true,
@@ -12,6 +15,7 @@
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
     "baseUrl": ".",
+    "outDir": "dist",
     "types": ["node", "reflect-metadata"],
     "paths": {
       "@/*": [

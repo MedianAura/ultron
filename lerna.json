@@ -2,7 +2,7 @@
   "packages": [
     "packages/*"
   ],
-  "npmClient": "yarn",
+  "npmClient": "pnpm",
   "version": "independent",
   "stream": true,
   "parallel": true,

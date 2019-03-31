@@ -44,6 +44,10 @@
     "less": "^3.0.4",
     "less-loader": "^4.1.0",
     "lint-staged": "^8.1.0",
+    "prettier": "^1.16.4",
+    "tslint-config-prettier": "^1.18.0",
+    "tslint-eslint-rules": "^5.4.0",
+    "tslint-plugin-prettier": "^2.0.1",
     "typescript": "^3.2.1",
     "vue-template-compiler": "^2.5.21"
   },

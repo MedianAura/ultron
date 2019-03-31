@@ -1,11 +1,13 @@
 {
-  "name": "application",
+  "name": "@ultron/application",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/main.js",
+  "types": "dist/main.d.ts",
   "scripts": {
     "start": "cross-env DEBUG=ultron:* node dist/main.js",
-    "application:watch": "gulp watch"
+    "watch:ts": "nodemon -e ts --watch src --exec tsc",
+    "build": "tsc"
   },
   "author": "",
   "license": "ISC",
@@ -28,9 +30,13 @@
     "gulp-sourcemaps": "^2.6.5",
     "gulp-typescript": "^5.0.1",
     "gulp-uglify": "^3.0.2",
-    "standard": "^12.0.1",
+    "nodemon": "^1.18.10",
+    "prettier": "^1.16.4",
     "tslib": "^1.9.3",
     "tslint": "^5.14.0",
+    "tslint-config-prettier": "^1.18.0",
+    "tslint-eslint-rules": "^5.4.0",
+    "tslint-plugin-prettier": "^2.0.1",
     "typescript": "^3.3.3333"
   },
   "dependencies": {
