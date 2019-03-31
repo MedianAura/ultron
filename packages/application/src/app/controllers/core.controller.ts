@@ -71,6 +71,10 @@ export class CoreController {
     return this.applicationController;
   }
 
+  public getApplications(): Application[] {
+    return this.applications;
+  }
+
   private setConfiguration() {
     const jsonString = readFileSync(path.resolve(this.path.app, 'config', 'main_ultron.json'), { encoding: 'utf8' });
 

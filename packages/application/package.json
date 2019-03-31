@@ -1,9 +1,10 @@
 {
   "name": "@ultron/application",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "",
   "main": "dist/main.js",
-  "types": "dts/**/*.d.ts",
+  "types": "dist/main.d.ts",
+  "private": true,
   "scripts": {
     "start": "cross-env DEBUG=ultron:* node dist/main.js",
     "watch:ts": "tsc --watch",

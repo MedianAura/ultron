@@ -1,8 +1,6 @@
 {
-  "packages": [
-    "packages/*"
-  ],
-  "npmClient": "pnpm",
+  "packages": ["packages/*"],
+  "npmClient": "yarn",
   "version": "independent",
   "stream": true,
   "parallel": true,

@@ -1,20 +1,8 @@
 'use strict';
-var __assign =
-  (this && this.__assign) ||
-  function() {
-    __assign =
-      Object.assign ||
-      function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-          s = arguments[i];
-          for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-        }
-        return t;
-      };
-    return __assign.apply(this, arguments);
-  };
-var electron = require('electron');
-var setupMainHandler = require('eiphop').setupMainHandler;
-var applicationAction = require('./actions/application');
-setupMainHandler(electron, __assign({}, applicationAction), true);
+Object.defineProperty(exports, '__esModule', { value: true });
+var tslib_1 = require('tslib');
+var eiphop_1 = require('eiphop');
+var electron_1 = tslib_1.__importDefault(require('electron'));
+var application_1 = require('./actions/application');
+eiphop_1.setupMainHandler(electron_1.default, tslib_1.__assign({}, application_1.actions), true);
 //# sourceMappingURL=api.js.map

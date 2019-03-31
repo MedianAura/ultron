@@ -1,37 +1,35 @@
 'use strict';
-var _a = require('electron'),
-  app = _a.app,
-  BrowserWindow = _a.BrowserWindow,
-  ipcMain = _a.ipcMain;
-var ArgumentParser = require('argparse').ArgumentParser;
-var Core = require('@ultron/application').Core;
-var path = require('path');
-var url = require('url');
-var walkBack = require('walk-back');
+Object.defineProperty(exports, '__esModule', { value: true });
+var tslib_1 = require('tslib');
+var argparse_1 = require('argparse');
+var electron_1 = require('electron');
+var path_1 = tslib_1.__importDefault(require('path'));
+var url_1 = tslib_1.__importDefault(require('url'));
+require('./api.js');
 if (require('electron-squirrel-startup')) {
-  app.quit();
+  electron_1.app.quit();
 }
 var args;
-var parser = new ArgumentParser({
+var parser = new argparse_1.ArgumentParser({
   addHelp: true,
-  version: require('../package').version,
   description: require('../package').description,
   prog: require('../package.json').name,
+  version: require('../package').version,
 });
 parser.addArgument(['-d', '--debug'], {
-  help: 'Active le mode debug.',
-  defaultValue: false,
   action: 'storeTrue',
+  defaultValue: false,
+  help: 'Active le mode debug.',
 });
 parser.addArgument(['-s', '--server'], {
-  help: 'Lance le programme avec un serveur de debug.',
-  defaultValue: false,
   action: 'storeTrue',
+  defaultValue: false,
+  help: 'Lance le programme avec un serveur de debug.',
 });
 parser.addArgument(['--dev'], {
-  help: 'Lance le programme en mode développement.',
-  defaultValue: false,
   action: 'storeTrue',
+  defaultValue: false,
+  help: 'Lance le programme en mode développement.',
 });
 var arg = process.argv.slice(1);
 if (process.argv.join(' ').indexOf('electron.exe') > -1) {
@@ -41,26 +39,25 @@ try {
   args = parser.parseKnownArgs(arg);
   args = args[0];
 } catch (e) {
-  app.quit();
+  electron_1.app.quit();
 }
 var mainWindow;
-var api = require('./api.js');
 var createWindow = function() {
-  mainWindow = new BrowserWindow({
+  mainWindow = new electron_1.BrowserWindow({
     fullscreenable: false,
     useContentSize: true,
     resizable: false,
     width: 1280,
     height: 924,
-    icon: path.join(__dirname, 'assets/ultron_logo.ico'),
+    icon: path_1.default.join(__dirname, 'assets/ultron_logo.ico'),
   });
-  var startURL = url.format({
-    pathname: path.join(__dirname, '../dist/index.html'),
+  var startURL = url_1.default.format({
+    pathname: path_1.default.join(__dirname, '../dist/index.html'),
     protocol: 'file:',
     slashes: true,
   });
   if (args.debug && args.server) {
-    startURL = url.format({
+    startURL = url_1.default.format({
       pathname: 'localhost:8080',
       protocol: 'http:',
       slashes: true,
@@ -72,23 +69,15 @@ var createWindow = function() {
   }
   global.cmdArgs = args;
 };
-app.on('ready', createWindow);
-app.on('window-all-closed', function() {
+electron_1.app.on('ready', createWindow);
+electron_1.app.on('window-all-closed', function() {
   if (process.platform !== 'darwin') {
-    app.quit();
+    electron_1.app.quit();
   }
 });
-app.on('activate', function() {
+electron_1.app.on('activate', function() {
   if (mainWindow === null) {
     createWindow();
   }
 });
-try {
-  Core.setDevelopement(args.dev);
-  Core.setElectron(ipcMain);
-  Core.setApplicationPath(path.resolve(walkBack(process.cwd(), 'config'), '..'));
-  Core.start();
-} catch (e) {
-  console.error(e.message);
-}
 //# sourceMappingURL=index.js.map

@@ -1,8 +1,8 @@
-import { Core } from '@ultron/application/src/main';
+import { Core } from '@ultron/application';
 
 export const actions = {
   'get-applications': (req: any, res: any) => {
-    res.send({ applications: Core.applications });
+    res.send({ applications: Core.getApplications() });
   },
   'set-application': (req: any, res: any) => {
     // res.send({ applications: Core.applications })
