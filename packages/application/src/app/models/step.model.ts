@@ -1,15 +1,15 @@
-import {Any, JsonObject, JsonProperty} from "json2typescript";
-import {StepOption} from "@/app/models/step-option.model";
-import {ValidateNested} from 'class-validator';
+import { ValidateNested } from 'class-validator';
+import { Any, JsonObject, JsonProperty } from 'json2typescript';
+import { StepOption } from './step-option.model';
 
-@JsonObject("Step")
+@JsonObject('Step')
 export class Step {
-    @JsonProperty("type", String)
-    type: string = undefined;
+  @JsonProperty('type', String)
+  public type: string = undefined;
 
-    @JsonProperty("options", Any)
-    jsonOptions: any = undefined;
+  @JsonProperty('options', Any)
+  public jsonOptions: any = undefined;
 
-    @ValidateNested()
-    options: StepOption = undefined;
+  @ValidateNested()
+  public options: StepOption = undefined;
 }

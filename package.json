@@ -12,7 +12,9 @@
     "clean": "lerna clean",
     "clean:build": "lerna exec -- rimraf lib",
     "release": "lerna publish",
-    "ls": "lerna ls"
+    "ls": "lerna ls",
+    "run:prettier": "prettier --write \"./**/*.{vue,ts,js,html}\"",
+    "run:prettier:check": "prettier --check \"./**/*.{vue,ts,js,html}\""
   },
   "husky": {
     "hooks": {

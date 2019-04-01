@@ -1,11 +1,11 @@
 import { User } from '@/models/user.model';
 
-export interface RootState {
+export interface IRootState {
   version: string;
   login: any;
 }
 
-export interface LoginState {
+export interface ILoginState {
   user: User;
   isLogged: boolean;
   error: boolean;

@@ -1,18 +1,18 @@
-import {JsonObject, JsonProperty} from "json2typescript";
-import {StepOption} from "@/app/models/step-option.model";
-import {Connection} from "@/app/models/connection.model";
+import { JsonObject, JsonProperty } from 'json2typescript';
+import { Connection } from '../connection.model';
+import { StepOption } from '../step-option.model';
 
-@JsonObject("SshOption")
+@JsonObject('SshOption')
 export class SshOption extends StepOption {
-    @JsonProperty("title", String, true)
-    title: string = 'SSH';
+  @JsonProperty('title', String, true)
+  public title: string = 'SSH';
 
-    @JsonProperty("ref", String)
-    ref: string = undefined
+  @JsonProperty('ref', String)
+  public ref: string = undefined;
 
-    @JsonProperty("cmd", [String])
-    commands: string[] = []
+  @JsonProperty('cmd', [String])
+  public commands: string[] = [];
 
-    @JsonProperty("connection", Connection, true)
-    connection: Connection = undefined
+  @JsonProperty('connection', Connection, true)
+  public connection: Connection = undefined;
 }

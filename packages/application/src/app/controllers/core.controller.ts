@@ -1,14 +1,14 @@
-import { ApplicationController } from '@/app/controllers/application.controller';
-import { Application } from '@/app/models/application.model';
-import { UltronConfiguration } from '@/app/models/ultron-configuration.model';
-import { GlobalOptionFactory } from '@/app/services/global-option-factory.service';
-import { JsonConfigurationService } from '@/app/services/json-configuration.service';
-import TYPES from '@/app/types/TYPES';
 import fg from 'fast-glob';
 import { existsSync, readFileSync } from 'fs';
 import { inject, injectable } from 'inversify';
 import { find } from 'lodash';
 import * as path from 'path';
+import { Application } from '../models/application.model';
+import { UltronConfiguration } from '../models/ultron-configuration.model';
+import { GlobalOptionFactory } from '../services/global-option-factory.service';
+import { JsonConfigurationService } from '../services/json-configuration.service';
+import TYPES from '../types/TYPES';
+import { ApplicationController } from './application.controller';
 
 const debug = require('debug')('ultron:CoreController');
 

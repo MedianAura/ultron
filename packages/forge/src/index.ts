@@ -112,11 +112,10 @@ app.on('activate', () => {
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here
 
-// try {
-//   Core.setDevelopement(args.dev);
-//   Core.setElectron(ipcMain);
-//   Core.setApplicationPath(path.resolve(walkBack(process.cwd(), 'config'), '..'));
-//   Core.start();
-// } catch (e) {
-//   console.error(e.message);
-// }
+try {
+  Core.setDevelopement(args.dev);
+  Core.setApplicationPath(path.resolve(walkBack(process.cwd(), 'config'), '..'));
+  Core.start();
+} catch (e) {
+  console.error(e.message);
+}

@@ -1,29 +1,29 @@
-import {JsonObject, JsonProperty} from "json2typescript";
-import {CodePageEnum} from "@/app/enums/code-page.enum";
+import { JsonObject, JsonProperty } from 'json2typescript';
+import { CodePageEnum } from '../enums/code-page.enum';
 
-@JsonObject("CodecParams")
+@JsonObject('CodecParams')
 export class CodecParams {
-    @JsonProperty("codecIn", String)
-    codecIn: CodePageEnum;
+  @JsonProperty('codecIn', String)
+  public codecIn: CodePageEnum;
 
-    @JsonProperty("codecOut", String)
-    codecOut: CodePageEnum;
+  @JsonProperty('codecOut', String)
+  public codecOut: CodePageEnum;
 
-    @JsonProperty("inputPath", String)
-    inputPath: string;
+  @JsonProperty('inputPath', String)
+  public inputPath: string;
 
-    @JsonProperty("inputMask", [String])
-    inputMask: string[];
+  @JsonProperty('inputMask', [String])
+  public inputMask: string[];
 
-    @JsonProperty("outputPath", String)
-    outputPath: string;
+  @JsonProperty('outputPath', String)
+  public outputPath: string;
 
-    // TODO : Give access to this...
-    // get listAction(): object[] {
-    //     // return this.steps[this.sequence]['options']['codec'].map((value: CodecParams) => {
-    //     //     value['__inputPath'] = this.rootPath + value['inputPath']
-    //     //     value['__outputPath'] = this.selectedVersion.workPath + value['outputPath']
-    //     //     return value
-    //     // })
-    // }
+  // TODO : Give access to this...
+  // get listAction(): object[] {
+  //     // return this.steps[this.sequence]['options']['codec'].map((value: CodecParams) => {
+  //     //     value['__inputPath'] = this.rootPath + value['inputPath']
+  //     //     value['__outputPath'] = this.selectedVersion.workPath + value['outputPath']
+  //     //     return value
+  //     // })
+  // }
 }

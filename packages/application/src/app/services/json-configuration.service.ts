@@ -1,21 +1,20 @@
-import {Application} from '@/app/models/application.model';
 import * as fs from 'fs';
-import {JsonFactoryService} from '@/app/services/json-factory.service';
-import {GlobalOptionFactory} from '@/app/services/global-option-factory.service';
-import {inject, injectable} from 'inversify';
-import TYPES from '@/app/types/TYPES';
+import { inject, injectable } from 'inversify';
+import { Application } from '../models/application.model';
+import TYPES from '../types/TYPES';
+import { GlobalOptionFactory } from './global-option-factory.service';
+import { JsonFactoryService } from './json-factory.service';
 
 const debug = require('debug')('ultron:Helper:JsonConfiguration');
 
 @injectable()
 export class JsonConfigurationService {
-
   @inject(TYPES.GlobalOptionFactory)
   private GlobalOptionFactory: GlobalOptionFactory;
 
   public setJSONConfiguration(files: string[]): Application[] {
-    const jsons = files.map((file) => this.getJSONConfiguration(file));
-    return jsons.map((json) => this.createApplication(json));
+    const jsons = files.map(file => this.getJSONConfiguration(file));
+    return jsons.map(json => this.createApplication(json));
   }
 
   private createApplication(json: object): Application {
@@ -27,7 +26,7 @@ export class JsonConfigurationService {
   }
 
   private getJSONConfiguration(file: string): object {
-    const text = fs.readFileSync(file, {encoding: 'utf8'});
+    const text = fs.readFileSync(file, { encoding: 'utf8' });
 
     try {
       return JSON.parse(this.GlobalOptionFactory.replaceGlobalVariable(text));

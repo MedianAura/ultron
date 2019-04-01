@@ -1,14 +1,14 @@
-import {JsonObject, JsonProperty} from "json2typescript";
-import {StepOption} from "@/app/models/step-option.model";
+import { JsonObject, JsonProperty } from 'json2typescript';
+import { StepOption } from '../step-option.model';
 
-@JsonObject("GitCleanOption")
+@JsonObject('GitCleanOption')
 export class GitCleanOption extends StepOption {
-    @JsonProperty("title", String, true)
-    title: string = 'Git clean';
+  @JsonProperty('title', String, true)
+  public title: string = 'Git clean';
 
-    @JsonProperty("folder", [String])
-    folder: string[] = []
+  @JsonProperty('folder', [String])
+  public folder: string[] = [];
 
-    @JsonProperty("file", [String])
-    file: string[] = undefined
+  @JsonProperty('file', [String])
+  public file: string[] = undefined;
 }

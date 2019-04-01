@@ -1,3 +1,4 @@
+import { Application } from '@ultron/application/dist/app/models/application.model';
 import { emit } from 'eiphop';
 
 export class EventManager {
@@ -9,7 +10,7 @@ export class EventManager {
 
   public getApplications() {
     emit('get-applications')
-      .then((res: any) => console.log(res))
+      .then((res: Application[]) => console.log(res))
       .catch((err: any) => console.log(err));
   }
 }

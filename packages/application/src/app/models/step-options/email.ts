@@ -1,32 +1,32 @@
-import {JsonObject, JsonProperty} from "json2typescript";
-import {StepOption} from "@/app/models/step-option.model";
+import { JsonObject, JsonProperty } from 'json2typescript';
+import { StepOption } from '../step-option.model';
 
-@JsonObject("EmailTemplate")
+@JsonObject('EmailTemplate')
 class EmailTemplate {
-    @JsonProperty("ref", String)
-    ref: string
+  @JsonProperty('ref', String)
+  public ref: string;
 
-    @JsonProperty("title", String)
-    title: string
+  @JsonProperty('title', String)
+  public title: string;
 }
 
-@JsonObject("EmailOption")
+@JsonObject('EmailOption')
 export class EmailOption extends StepOption {
-    @JsonProperty("title", String, true)
-    title: string = 'eMail';
+  @JsonProperty('title', String, true)
+  public title: string = 'eMail';
 
-    @JsonProperty("to", String)
-    to: string = undefined
+  @JsonProperty('to', String)
+  public to: string = undefined;
 
-    @JsonProperty("subject", String)
-    subject: string = undefined
+  @JsonProperty('subject', String)
+  public subject: string = undefined;
 
-    @JsonProperty("text", String, true)
-    text: string = undefined
+  @JsonProperty('text', String, true)
+  public text: string = undefined;
 
-    @JsonProperty("markdown", String, true)
-    markdown: string = undefined
+  @JsonProperty('markdown', String, true)
+  public markdown: string = undefined;
 
-    @JsonProperty("template", EmailTemplate)
-    template: EmailTemplate = undefined
+  @JsonProperty('template', EmailTemplate)
+  public template: EmailTemplate = undefined;
 }

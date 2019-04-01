@@ -1,31 +1,30 @@
-import {Any, JsonObject, JsonProperty} from 'json2typescript';
-import {Environnement} from '@/app/models/environnement.model';
-import {Version} from '@/app/models/version.model';
-import git, {FetchResult, SimpleGit} from 'simple-git/promise';
-import * as path from 'path';
-import Bluebird, {Inspection} from 'bluebird';
-import {uniq, get} from 'lodash';
+import Bluebird, { Inspection } from 'bluebird';
+import { Any, JsonObject, JsonProperty } from 'json2typescript';
+import { get, uniq } from 'lodash';
 import * as fetch from 'node-fetch';
-import TYPES from '@/app/types/TYPES';
-import {UltronConfiguration} from '@/app/models/ultron-configuration.model';
-import container from '@/app/container';
+import * as path from 'path';
+import git, { FetchResult, SimpleGit } from 'simple-git/promise';
+import container from '../container';
+import TYPES from '../types/TYPES';
+import { Environnement } from './environnement.model';
+import { UltronConfiguration } from './ultron-configuration.model';
+import { Version } from './version.model';
 
-const {SaferEval} = require('safer-eval')
-const https = require("https");
+const { SaferEval } = require('safer-eval');
+const https = require('https');
 const agent = new https.Agent({
-  rejectUnauthorized: false
-})
+  rejectUnauthorized: false,
+});
 
 const debug = require('debug')('ultron:model:ApplicationModel');
 
-interface GitHeads {
+interface IGitHeads {
   tags: string[];
   branches: string[];
 }
 
 @JsonObject('Application')
 export class Application {
-
   @JsonProperty('type', String)
   public type: string = undefined;
 
@@ -51,13 +50,13 @@ export class Application {
 
   public gitInstance: SimpleGit = undefined;
 
-  public gitHeads: GitHeads = {
+  public gitHeads: IGitHeads = {
     tags: [],
     branches: [],
   };
 
   get path(): string {
-    let ultron = container.get<UltronConfiguration>(TYPES.UltronConfiguration)
+    const ultron = container.get<UltronConfiguration>(TYPES.UltronConfiguration);
     return path.resolve(ultron.work, 'local', this.name);
   }
 
@@ -71,7 +70,7 @@ export class Application {
     const fs = require('fs-extra');
     fs.ensureDirSync(this.path);
     this.gitInstance = git(this.path);
-    return Promise.resolve()
+    return Promise.resolve();
   }
 
   public setLocalGit(): Promise<FetchResult | string> {
@@ -87,31 +86,32 @@ export class Application {
   public getGitVersion(): Promise<null> {
     const semverSort = require('semver-sort');
 
-    return new Promise((resolve) => {
-      this.gitInstance.listRemote(['--heads', '--tags'])
-        .then((aVersionData: string) => {
-          const data_list = aVersionData.split('\n');
+    return new Promise(resolve => {
+      this.gitInstance.listRemote(['--heads', '--tags']).then((aVersionData: string) => {
+        const data_list = aVersionData.split('\n');
 
-          const aListHead = [];
-          const aListTag = [];
+        const aListHead = [];
+        const aListTag = [];
 
-          for (const i in data_list) {
-            if (this.fuzzySearch(['release/rel-', 'heads/master', 'heads/release-master', 'env/production'], data_list[i])) {
-              continue;
-            }
-
-            const tempv = get(data_list[i].split(/\s/), [1], '').replace('^{}', '');
-            if (data_list[i].indexOf('refs/tags/') > -1) {
-              aListTag.push(tempv.replace('refs/tags/', ''));
-            } else if (data_list[i].indexOf('refs/heads/') > -1) {
-              aListHead.push(tempv.replace('refs/heads/', ''));
-            }
+        for (const i in data_list) {
+          if (
+            this.fuzzySearch(['release/rel-', 'heads/master', 'heads/release-master', 'env/production'], data_list[i])
+          ) {
+            continue;
           }
 
-          this.gitHeads.tags = uniq(semverSort.desc(aListTag));
-          this.gitHeads.branches = uniq(semverSort.desc(aListHead));
-          resolve();
-        });
+          const tempv = get(data_list[i].split(/\s/), [1], '').replace('^{}', '');
+          if (data_list[i].indexOf('refs/tags/') > -1) {
+            aListTag.push(tempv.replace('refs/tags/', ''));
+          } else if (data_list[i].indexOf('refs/heads/') > -1) {
+            aListHead.push(tempv.replace('refs/heads/', ''));
+          }
+        }
+
+        this.gitHeads.tags = uniq(semverSort.desc(aListTag));
+        this.gitHeads.branches = uniq(semverSort.desc(aListHead));
+        resolve();
+      });
     });
   }
 
@@ -119,9 +119,9 @@ export class Application {
     const aListeVersion: any[] = [];
     const fs = require('fs-extra');
 
-    this.environnements.forEach((env) => {
+    this.environnements.forEach(env => {
       if (env.path.indexOf('https:') > -1) {
-        aListeVersion.push(fetch(env.path, {agent}).then((response: Response) => response.text()));
+        aListeVersion.push(fetch(env.path, { agent }).then((response: Response) => response.text()));
       } else if (env.path.indexOf('http:') > -1) {
         aListeVersion.push(fetch(env.path).then((response: Response) => response.text()));
       } else {
@@ -129,9 +129,11 @@ export class Application {
       }
     });
 
-    return Bluebird.all(aListeVersion.map((promise) => {
-      return Bluebird.resolve(promise).reflect();
-    })).each((inspection: Inspection<string>, key: number) => {
+    return Bluebird.all(
+      aListeVersion.map(promise => {
+        return Bluebird.resolve(promise).reflect();
+      }),
+    ).each((inspection: Inspection<string>, key: number) => {
       if (inspection.isFulfilled()) {
         this.environnements[key].version = this.formatVersion(inspection.value());
         debug('Version trouvée ', this.environnements[key].path + ': ' + this.environnements[key].version);
@@ -155,9 +157,9 @@ export class Application {
 
   private formatVersion(version: string) {
     if (typeof version === 'string' && version.indexOf('oRxvVersion') > -1) {
-      const safer = new SaferEval()
-      const res: any = safer.runInContext(version.split('=')[1].trim())
-      return [res.major, res.minor, res.revision, res.build_number].join('.')
+      const safer = new SaferEval();
+      const res: any = safer.runInContext(version.split('=')[1].trim());
+      return [res.major, res.minor, res.revision, res.build_number].join('.');
     }
     return 'N/D';
   }

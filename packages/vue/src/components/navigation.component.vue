@@ -11,9 +11,9 @@
             <a class="nav-link">Application</a>
           </router-link>
           <li class="nav-item" v-if="isLogged">
-            <span class="nav-link"
-              ><span>{{ loggedUser }}</span></span
-            >
+            <span class="nav-link">
+              <span>{{ loggedUser }}</span>
+            </span>
           </li>
           <li class="nav-item" v-if="isLogged">
             <span class="nav-link clickable" v-on:click="doDisconnectUser">Logout</span>
@@ -32,15 +32,13 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import { Action, State } from 'vuex-class';
-import { LoginState, RootState } from '@/types';
-
-const namespace: string = 'login';
+import { ILoginState, IRootState } from '@/types';
 
 @Component
 export default class NavigationComponent extends Vue {
-  @State('login') stateLogin!: LoginState;
-  @State('version') rootState!: RootState;
-  @Action('logout', { namespace }) logout!: any;
+  @State('login') stateLogin!: ILoginState;
+  @State('version') rootState!: IRootState;
+  @Action('LoginStore/logout') logout!: any;
 
   doDisconnectUser() {
     this.logout();

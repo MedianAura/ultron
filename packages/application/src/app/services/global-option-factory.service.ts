@@ -1,11 +1,11 @@
-import {each} from 'lodash';
-import {Tools} from '@/app/helpers/tools';
+import { inject, injectable } from 'inversify';
+import { each } from 'lodash';
 import * as path from 'path';
-import {Version} from '@/app/models/version.model';
-import {inject, injectable} from 'inversify';
-import TYPES from '@/app/types/TYPES';
-import {UltronConfiguration} from '@/app/models/ultron-configuration.model';
-import {Application} from '@/app/models/application.model';
+import { Tools } from '../helpers/tools';
+import { Application } from '../models/application.model';
+import { UltronConfiguration } from '../models/ultron-configuration.model';
+import { Version } from '../models/version.model';
+import TYPES from '../types/TYPES';
 
 const debug = require('debug')('ultron:service:GlobalOptionFactory');
 
@@ -16,7 +16,7 @@ interface OptionReplace {
 @injectable()
 export class GlobalOptionFactory {
   @inject(TYPES.UltronConfiguration)
-  private config: UltronConfiguration
+  private config: UltronConfiguration;
 
   private global: OptionReplace = {
     '%disque%': undefined,
@@ -48,7 +48,7 @@ export class GlobalOptionFactory {
     this.versions = {
       '%customName%': version.getCustomName(application.name),
       '%workPath%': version.getWorkPath().replace(/\\/g, '\\\\'),
-      '%archiveRootDir%': version.getArchiveRootDir().replace(/\\/g, '\\\\')
+      '%archiveRootDir%': version.getArchiveRootDir().replace(/\\/g, '\\\\'),
     };
   }
 

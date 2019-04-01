@@ -1,5 +1,5 @@
-import {JsonObject, JsonProperty} from 'json2typescript';
-import {StepOption} from '@/app/models/step-option.model';
+import { JsonObject, JsonProperty } from 'json2typescript';
+import { StepOption } from '../step-option.model';
 
 @JsonObject('CopyExclusionOption')
 export class CopyExclusionOption extends StepOption {
@@ -30,4 +30,3 @@ export class CopyOption extends StepOption {
   @JsonProperty('excludeFile', CopyExclusionOption, true)
   public excludeFile: CopyExclusionOption = undefined;
 }
-

@@ -4,8 +4,8 @@ import './inversify.config';
 
 import container from './container';
 
-import TYPES from '@/app/types/TYPES';
+import TYPES from './types/TYPES';
 
-import { CoreController } from '@/app/controllers/core.controller';
+import { CoreController } from './controllers/core.controller';
 
 export const Core: CoreController = container.get<CoreController>(TYPES.CoreController);

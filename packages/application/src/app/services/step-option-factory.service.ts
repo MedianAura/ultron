@@ -1,11 +1,12 @@
-import {get} from 'lodash';
-import {JsonFactoryService} from '@/app/services/json-factory.service';
-import {StepOption} from '@/app/models/step-option.model';
-import {Step} from '@/app/models/step.model';
-import {StepTypeEnum} from '@/app/enums/step-type.enum';
-import {GlobalOptionFactory} from '@/app/services/global-option-factory.service';
-import {inject, injectable} from 'inversify';
-import TYPES from '@/app/types/TYPES';
+import { inject, injectable } from 'inversify';
+import { get } from 'lodash';
+import { StepTypeEnum } from '../enums/step-type.enum';
+import { StepOption } from '../models/step-option.model';
+import { Step } from '../models/step.model';
+import TYPES from '../types/TYPES';
+import { GlobalOptionFactory } from './global-option-factory.service';
+import { JsonFactoryService } from './json-factory.service';
+
 import {
   CommandOption,
   ConvertOption,
@@ -18,25 +19,19 @@ import {
   GitCloneOption,
   GitRebaseOption,
   SshOption,
-  ZipOption
-} from '@/app/models/step-options';
-
+  ZipOption,
+} from '../models/step-options';
 
 const debug = require('debug')('ultron:service:StepOptionFactory');
 
 @injectable()
 export class StepOptionFactory {
-
   @inject(TYPES.GlobalOptionFactory)
-  private GlobalOptionFactory: GlobalOptionFactory
+  private GlobalOptionFactory: GlobalOptionFactory;
 
-  getStepOptions(step: Step, config: object) {
+  public getStepOptions(step: Step, config: object) {
     if (typeof step.jsonOptions === 'string') {
-      step.jsonOptions = get(
-        config,
-        step.jsonOptions.replace('config.', ''),
-        undefined
-      );
+      step.jsonOptions = get(config, step.jsonOptions.replace('config.', ''), undefined);
     }
 
     if (typeof step.jsonOptions === 'undefined') {
@@ -47,8 +42,8 @@ export class StepOptionFactory {
   }
 
   private getClass(type: string, step: Step): StepOption {
-    let temp: object = JSON.parse(
-      this.GlobalOptionFactory.replaceApplicationGlobalVariable(JSON.stringify(step.jsonOptions))
+    const temp: object = JSON.parse(
+      this.GlobalOptionFactory.replaceApplicationGlobalVariable(JSON.stringify(step.jsonOptions)),
     );
 
     switch (type) {

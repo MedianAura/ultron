@@ -1,19 +1,15 @@
-import {JsonObject, JsonProperty} from 'json2typescript';
-import {Step} from '@/app/models/step.model';
-import {VersionTypeEnum} from '@/app/enums/version-type.enum';
-import {get} from 'lodash';
+import { validate, ValidationError } from 'class-validator';
+import { JsonObject, JsonProperty } from 'json2typescript';
+import { get } from 'lodash';
 import * as path from 'path';
-import TYPES from '@/app/types/TYPES';
-import {UltronConfiguration} from '@/app/models/ultron-configuration.model';
-import {lazyInject} from '@/app/container';
-import {validate, ValidationError} from 'class-validator';
+import { lazyInject } from '../container';
+import { VersionTypeEnum } from '../enums/version-type.enum';
+import TYPES from '../types/TYPES';
+import { Step } from './step.model';
+import { UltronConfiguration } from './ultron-configuration.model';
 
 @JsonObject('Version')
 export class Version {
-
-  @lazyInject(TYPES.UltronConfiguration)
-  private ultron: UltronConfiguration;
-
   @JsonProperty('name', String)
   public name: string = undefined;
 
@@ -35,26 +31,28 @@ export class Version {
   @JsonProperty('steps', [Step])
   public steps: Step[] = [];
 
+  @lazyInject(TYPES.UltronConfiguration)
+  private ultron: UltronConfiguration;
+
   public validate(): void {
-    let aIsValid: Promise<ValidationError[]>[] = this.steps.map((step) => validate(step));
+    const aIsValid: Array<Promise<ValidationError[]>> = this.steps.map(step => validate(step));
 
-    Promise.all(aIsValid)
-      .then((errors: ValidationError[][]) => {
-        let hasErrors = errors.filter((error) => error.length > 0)
+    Promise.all(aIsValid).then((errors: ValidationError[][]) => {
+      const hasErrors = errors.filter(error => error.length > 0);
 
-        if (hasErrors.length > 0) {
-          hasErrors.forEach((error) => {
-            error.forEach((e) => {
-              e.children.forEach((child) => {
-                console.error(child.constraints)
-              })
-            })
-          })
-          Promise.reject(false)
-        }
+      if (hasErrors.length > 0) {
+        hasErrors.forEach(error => {
+          error.forEach(e => {
+            e.children.forEach(child => {
+              console.error(child.constraints);
+            });
+          });
+        });
+        Promise.reject(false);
+      }
 
-        Promise.resolve(true)
-      })
+      Promise.resolve(true);
+    });
   }
 
   public getCustomName(name: string): string {

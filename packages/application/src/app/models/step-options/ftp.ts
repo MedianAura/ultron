@@ -1,19 +1,19 @@
-import {JsonObject, JsonProperty} from "json2typescript";
-import {StepOption} from "@/app/models/step-option.model";
-import {FTP} from "@/app/models/ftp.model";
-import {Connection} from "@/app/models/connection.model";
+import { JsonObject, JsonProperty } from 'json2typescript';
+import { Connection } from '../connection.model';
+import { FTP } from '../ftp.model';
+import { StepOption } from '../step-option.model';
 
-@JsonObject("FtpOption")
+@JsonObject('FtpOption')
 export class FtpOption extends StepOption {
-    @JsonProperty("title", String, true)
-    title: string = 'FTP';
+  @JsonProperty('title', String, true)
+  public title: string = 'FTP';
 
-    @JsonProperty("ref", String)
-    ref: string = undefined
+  @JsonProperty('ref', String)
+  public ref: string = undefined;
 
-    @JsonProperty("ftp", FTP)
-    ftp: FTP = undefined
+  @JsonProperty('ftp', FTP)
+  public ftp: FTP = undefined;
 
-    @JsonProperty("connection", Connection, true)
-    connection: Connection = undefined
+  @JsonProperty('connection', Connection, true)
+  public connection: Connection = undefined;
 }

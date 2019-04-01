@@ -35,14 +35,12 @@
 import { Component, Vue } from 'vue-property-decorator';
 import { Action, State } from 'vuex-class';
 import { User } from '../models/user.model';
-import { LoginState } from '../types';
-
-const namespace: string = 'login';
+import { ILoginState } from '../types';
 
 @Component
 export default class LoginPage extends Vue {
-  @State('login') stateLogin!: LoginState;
-  @Action('login', { namespace }) login: any;
+  @State('login') stateLogin!: ILoginState;
+  @Action('LoginStore/login') login: any;
 
   private username: string = '';
   private password: string = '';

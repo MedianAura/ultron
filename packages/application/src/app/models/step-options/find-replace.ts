@@ -1,5 +1,5 @@
-import {JsonObject, JsonProperty} from 'json2typescript';
-import {StepOption} from '@/app/models/step-option.model';
+import { JsonObject, JsonProperty } from 'json2typescript';
+import { StepOption } from '../step-option.model';
 
 @JsonObject('FindReplaceOption')
 export class FindReplaceOption extends StepOption {

@@ -1,15 +1,15 @@
-import {JsonObject, JsonProperty} from "json2typescript";
-import {CodecParams} from "@/app/models/codec-param.model";
-import {StepOption} from "@/app/models/step-option.model";
+import { JsonObject, JsonProperty } from 'json2typescript';
+import { CodecParams } from '../codec-param.model';
+import { StepOption } from '../step-option.model';
 
-@JsonObject("ConvertOption")
+@JsonObject('ConvertOption')
 export class ConvertOption extends StepOption {
-    @JsonProperty("title", String, true)
-    title: string = 'Conversion de fichier(s)';
+  @JsonProperty('title', String, true)
+  public title: string = 'Conversion de fichier(s)';
 
-    @JsonProperty("root", String)
-    root: string = undefined
+  @JsonProperty('root', String)
+  public root: string = undefined;
 
-    @JsonProperty("codec", [CodecParams])
-    codec: CodecParams[] = []
+  @JsonProperty('codec', [CodecParams])
+  public codec: CodecParams[] = [];
 }
