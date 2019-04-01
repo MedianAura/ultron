@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.8.1",
-    "bootstrap": "3",
+    "bootstrap": "^4.3.1",
     "core-js": "^2.6.5",
     "eiphop": "^1.0.6",
     "ldapjs": "^1.0.2",
@@ -24,6 +24,7 @@
   },
   "devDependencies": {
     "@types/jest": "^23.1.4",
+    "@types/node": "^11.12.2",
     "@vue/cli-plugin-babel": "^3.5.0",
     "@vue/cli-plugin-e2e-cypress": "^3.5.0",
     "@vue/cli-plugin-typescript": "^3.5.0",

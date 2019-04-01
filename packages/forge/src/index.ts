@@ -1,6 +1,6 @@
 import { Core } from '@ultron/application';
 import { ArgumentParser } from 'argparse';
-import { app, BrowserWindow, ipcMain } from 'electron';
+import { app, BrowserWindow } from 'electron';
 import path from 'path';
 import url from 'url';
 import walkBack from 'walk-back';

@@ -7,7 +7,7 @@ export class Step {
   @JsonProperty('type', String)
   public type: string = undefined;
 
-  @JsonProperty('options', Any)
+  @JsonProperty('options', Any, true)
   public jsonOptions: any = undefined;
 
   @ValidateNested()

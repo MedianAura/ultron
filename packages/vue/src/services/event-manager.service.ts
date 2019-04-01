@@ -1,4 +1,5 @@
-import { Application } from '@ultron/application/dist/app/models/application.model';
+import { Application } from '@ultron/application/src/app/models/application.model';
+import { JsonFactoryService } from '@ultron/application/src/app/services/json-factory.service';
 import { emit } from 'eiphop';
 
 export class EventManager {
@@ -10,7 +11,9 @@ export class EventManager {
 
   public getApplications() {
     emit('get-applications')
-      .then((res: Application[]) => console.log(res))
+      .then((res: any) => {
+        const apps = JsonFactoryService.getJsonConverter().deserializeArray(res.applications, Application);
+      })
       .catch((err: any) => console.log(err));
   }
 }
